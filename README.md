@@ -237,11 +237,9 @@ You can disable sorting, pagination and filtering altering middleware chain.
 
 ```ruby
 class ChannelFetch < Fetch
-  middleware do
-    delete MightyFetcher::Middleware::Filter
-    insert_before MightyFetcher::Middleware::Sort, CustomFilterMiddleware
-    use AnotherMiddleware
-  end
+  middleware.delete MightyFetcher::Middleware::Filter
+  middleware.insert_before MightyFetcher::Middleware::Sort, CustomFilterMiddleware
+  middleware.use AnotherMiddleware
 end
 ```
 
