@@ -1,7 +1,7 @@
-require 'mighty_fetcher/sort/ransackable/sort'
+require 'mighty_fetcher/ransackable_sort'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::Sort::Ransackable::Sort do
+RSpec.describe MightyFetcher::RansackableSort do
   before do
     2.downto(0).each do |n|
       Page.create(name: n)

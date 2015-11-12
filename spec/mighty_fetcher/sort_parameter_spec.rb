@@ -1,13 +1,13 @@
-require 'mighty_fetcher/sort/parameter'
-require 'mighty_fetcher/sort/parameter_definition'
+require 'mighty_fetcher/sort_parameter'
+require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::Sort::Parameter do
+RSpec.describe MightyFetcher::SortParameter do
   context '#direction' do
     subject(:parameter) { described_class.new(:asc, definition) }
     subject(:direction) { parameter.direction }
 
     context 'when reversed direction defined' do
-      let(:definition) { MightyFetcher::Sort::ParameterDefinition.new(:relevance, reverse_direction: true) }
+      let(:definition) { MightyFetcher::SortParameterDefinition.new(:relevance, reverse_direction: true) }
 
       it 'returns opposite direction' do
         is_expected.to eq('desc')
@@ -15,7 +15,7 @@ RSpec.describe MightyFetcher::Sort::Parameter do
     end
 
     context 'when no reversed direction defined' do
-      let(:definition) { MightyFetcher::Sort::ParameterDefinition.new(:relevance) }
+      let(:definition) { MightyFetcher::SortParameterDefinition.new(:relevance) }
 
       it 'returns the same direction' do
         is_expected.to eq('asc')

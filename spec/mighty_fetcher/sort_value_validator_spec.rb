@@ -1,8 +1,8 @@
-require 'mighty_fetcher/sort/value_validator'
-require 'mighty_fetcher/sort/undefined_parameter'
-require 'mighty_fetcher/sort/parameter_definition'
+require 'mighty_fetcher/sort_value_validator'
+require 'mighty_fetcher/sort_undefined_parameter'
+require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::Sort::ValueValidator do
+RSpec.describe MightyFetcher::SortValueValidator do
   before :all do
     I18n.backend.store_translations(:en,
       activemodel: {
@@ -19,7 +19,7 @@ RSpec.describe MightyFetcher::Sort::ValueValidator do
 
   context 'defined parameter' do
     let(:definition) do
-      MightyFetcher::Sort::ParameterDefinition.new('first_name')
+      MightyFetcher::SortParameterDefinition.new('first_name')
     end
 
     it 'is valid' do
@@ -29,7 +29,7 @@ RSpec.describe MightyFetcher::Sort::ValueValidator do
 
   context 'undefined parameter' do
     let(:definition) do
-      MightyFetcher::Sort::UndefinedParameter.new('first_name')
+      MightyFetcher::SortUndefinedParameter.new('first_name')
     end
 
     it 'is invalid' do

@@ -1,6 +1,6 @@
-require 'mighty_fetcher/sort/parameter_definition'
+require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::Sort::ParameterDefinition do
+RSpec.describe MightyFetcher::SortParameterDefinition do
   context '#as' do
     context 'when :as option given' do
       subject { described_class.new(:foo, as: :bar).as }

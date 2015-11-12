@@ -1,11 +1,11 @@
 require 'set'
-require 'mighty_fetcher/sort/dsl'
-require 'mighty_fetcher/sort/parameter_definition'
+require 'mighty_fetcher/sort_dsl'
+require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::Sort::DSL do
+RSpec.describe MightyFetcher::SortDSL do
   let(:fetcher_class) do
     Class.new do
-      extend MightyFetcher::Sort::DSL
+      extend MightyFetcher::SortDSL
     end
   end
 
@@ -18,7 +18,7 @@ RSpec.describe MightyFetcher::Sort::DSL do
 
     context 'add sortable property' do
       let(:property) do
-        MightyFetcher::Sort::ParameterDefinition.new(:foo)
+        MightyFetcher::SortParameterDefinition.new(:foo)
       end
 
       before do
@@ -32,7 +32,7 @@ RSpec.describe MightyFetcher::Sort::DSL do
 
     context 'add sortable property with :as' do
       let(:property) do
-        MightyFetcher::Sort::ParameterDefinition.new(:foo, as: :bar)
+        MightyFetcher::SortParameterDefinition.new(:foo, as: :bar)
       end
 
       before do
@@ -46,7 +46,7 @@ RSpec.describe MightyFetcher::Sort::DSL do
 
     context 'add sortable property with :reverse' do
       let(:property) do
-        MightyFetcher::Sort::ParameterDefinition.new(:foo, reverse_direction: true)
+        MightyFetcher::SortParameterDefinition.new(:foo, reverse_direction: true)
       end
 
       before do
@@ -60,7 +60,7 @@ RSpec.describe MightyFetcher::Sort::DSL do
 
     context 'add the same sortable property twice' do
       let(:property) do
-        MightyFetcher::Sort::ParameterDefinition.new(:foo)
+        MightyFetcher::SortParameterDefinition.new(:foo)
       end
 
       before do

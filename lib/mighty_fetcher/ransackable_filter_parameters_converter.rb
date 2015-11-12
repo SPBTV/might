@@ -35,7 +35,7 @@ module MightyFetcher
     # Build query method for polymorphic association
     # @see https://github.com/activerecord-hackery/ransack/wiki/Polymorphic-searches
     # @see https://github.com/activerecord-hackery/ransack/commit/c156fa4a7ac6e1a8d730791c49bf4403aa0f3af7#diff-a26803e1ff6e56eb67b80c91d79a063eR34
-    # @param [Parameter] filter
+    # @param [SortParameter] filter
     # @return [String]
     #
     # @example

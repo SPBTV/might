@@ -1,8 +1,8 @@
-require 'mighty_fetcher/sort/middleware'
-require 'mighty_fetcher/sort/parameter_definition'
+require 'mighty_fetcher/sort_middleware'
+require 'mighty_fetcher/sort_parameter_definition'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::Sort::Middleware do
+RSpec.describe MightyFetcher::SortMiddleware do
   before do
     2.downto(0).each do |n|
       Page.create(name: n)
@@ -11,7 +11,7 @@ RSpec.describe MightyFetcher::Sort::Middleware do
   let(:pages) { Page.all }
 
   let(:parameters_definition) do
-    [MightyFetcher::Sort::ParameterDefinition.new('name')]
+    [MightyFetcher::SortParameterDefinition.new('name')]
   end
 
   def call_middleware(parameters_definition, params)
