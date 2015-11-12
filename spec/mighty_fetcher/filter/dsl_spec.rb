@@ -5,7 +5,7 @@ require 'mighty_fetcher/filter/parameter_definition'
 RSpec.describe MightyFetcher::Filter::DSL do
   let(:fetcher_class) do
     Class.new do
-      include MightyFetcher::Filter::DSL
+      extend MightyFetcher::Filter::DSL
     end
   end
 
