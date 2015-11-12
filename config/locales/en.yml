@@ -1,0 +1,7 @@
+en:
+  activemodel:
+    errors:
+      messages:
+        undefined_filter: is not allowed filter name
+        undefined_sort_order: is not allowed sort order
+        invalid_page_type: is expected to be a HashMap with :limit and :offset keys

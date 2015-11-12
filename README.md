@@ -261,6 +261,12 @@ class AccessesFetcher < MightyFetcher::Base
 end
 ```
 
+To get translated error messages load Rails Railtie
+
+```ruby
+require 'mighty_fetcher/railtie
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake` to run the tests.
