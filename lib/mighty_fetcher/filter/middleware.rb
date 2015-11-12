@@ -1,5 +1,8 @@
-require_relative 'ransackable_filter'
-require_relative 'extractor'
+require_relative 'parameters_extractor'
+require_relative 'parameters_validator'
+require_relative 'ransackable/filter'
+require_relative 'ransackable/parameters_converter'
+require 'middleware'
 #
 module MightyFetcher
   #
@@ -15,35 +18,22 @@ module MightyFetcher
         @parameters_definition = parameters_definition
       end
 
-      attr_reader :parameters_definition, :app
-
       def call(env)
         scope, params = env
-        filter_provided_by_user = extract_filters(params)
 
-        validate_filters!(filter_provided_by_user)
-
-        filtered_scope = RansackableFilter.new(filter_provided_by_user).filter(scope)
+        filtered_scope, _ = ::Middleware::Builder.new do |b|
+          b.use ParametersExtractor, parameters_definition
+          b.use ParametersValidator
+          b.use Ransackable::ParametersConverter
+          b.use Ransackable::Filter
+        end.call([scope, params[:filter]])
 
         app.call([filtered_scope, params])
       end
 
       private
 
-      def extract_filters(params)
-        Extractor.new(params, parameters_definition).call
-      end
-
-      # @param [Array(<Parameter>)] filters given by user
-      # @return [void]
-      # @raise [ResourceFetcher::FilterValidationFailed] Is user provided invalid value for the given filter
-      def validate_filters!(filters)
-        invalid_filters = filters.select(&:invalid?)
-
-        if invalid_filters.any?
-          fail MightyFetcher::FilterValidationFailed, invalid_filters.map(&:errors)
-        end
-      end
+      attr_reader :parameters_definition, :app
     end
   end
 end

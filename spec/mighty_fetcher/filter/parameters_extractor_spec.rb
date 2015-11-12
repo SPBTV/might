@@ -1,24 +1,30 @@
 require 'set'
+require 'mighty_fetcher/filter/parameters_extractor'
 require 'mighty_fetcher/filter/predicates'
-require 'mighty_fetcher/filter/extractor'
 require 'mighty_fetcher/filter/parameter_definition'
 require 'mighty_fetcher/filter/parameter'
 
-RSpec.describe MightyFetcher::Filter::Extractor do
+RSpec.describe MightyFetcher::Filter::ParametersExtractor do
   context '#call' do
+    # @param parameters_definition [MightyFetcher::Filter::ParameterDefinition]
+    def extractor(parameters_definition)
+      app = ->(env) { env[1] }
+      described_class.new(app, Set.new([parameters_definition]))
+    end
+
     shared_examples 'predicate for value' do |predicate|
       context "when predicate #{predicate} given" do
         let(:attribute) { 'test' }
         let(:key) { "#{attribute}_#{predicate}" }
         let(:value) { 'value' }
-        let(:definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
+        let(:parameter_definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
 
         subject do
-          described_class.new({ filter: { key => value } }, Set.new([definition])).call
+          extractor(parameter_definition).call([nil, { key => value }])
         end
 
         it 'returns ransackable params' do
-          expected_parameter = MightyFetcher::Filter::Parameter.new(value, predicate, definition)
+          expected_parameter = MightyFetcher::Filter::Parameter.new(value, predicate, parameter_definition)
           is_expected.to contain_exactly(expected_parameter)
         end
       end
@@ -29,14 +35,14 @@ RSpec.describe MightyFetcher::Filter::Extractor do
         let(:attribute) { 'test' }
         let(:key) { "#{attribute}_#{predicate}" }
         let(:value) { 'value1,value2' }
-        let(:definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
+        let(:parameter_definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
 
         subject do
-          described_class.new({ filter: { key => 'value1,value2' } }, Set.new([definition])).call
+          extractor(parameter_definition).call([nil, { key => 'value1,value2' }])
         end
 
         it 'returns ransackable params' do
-          expected_parameter = MightyFetcher::Filter::Parameter.new(%w(value1 value2), predicate, definition)
+          expected_parameter = MightyFetcher::Filter::Parameter.new(%w(value1 value2), predicate, parameter_definition)
           is_expected.to contain_exactly(expected_parameter)
         end
       end
@@ -52,14 +58,14 @@ RSpec.describe MightyFetcher::Filter::Extractor do
 
     context 'when parameter is not given' do
       let(:attribute) { 'test' }
-      let(:definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
+      let(:parameter_definition) { MightyFetcher::Filter::ParameterDefinition.new(attribute) }
 
-      subject do
-        described_class.new({ filter: {} }, Set.new([definition])).call
+      subject(:filters) do
+        extractor(parameter_definition).call([nil, {}])
       end
 
       it 'returns ransackable params' do
-        expected_parameter = MightyFetcher::Filter::Parameter.new(nil, nil, definition)
+        expected_parameter = MightyFetcher::Filter::Parameter.new(nil, nil, parameter_definition)
         is_expected.to contain_exactly(expected_parameter)
       end
     end
@@ -68,15 +74,14 @@ RSpec.describe MightyFetcher::Filter::Extractor do
       let(:name) { :name }
       let(:aliased) { :title }
       let(:predicate) { 'eq' }
-      let(:definition) { MightyFetcher::Filter::ParameterDefinition.new(name, as: aliased) }
-      let(:definitions) { Set.new([definition]) }
+      let(:parameter_definition) { MightyFetcher::Filter::ParameterDefinition.new(name, as: aliased) }
 
       subject do
-        described_class.new({ filter: { "#{aliased}_#{predicate}" => 'foo' } }, definitions).call
+        extractor(parameter_definition).call([nil, {"#{aliased}_#{predicate}" => 'foo'}])
       end
 
       it 'returns ransackable params' do
-        expected_parameter = MightyFetcher::Filter::Parameter.new('foo', 'eq', definition)
+        expected_parameter = MightyFetcher::Filter::Parameter.new('foo', 'eq', parameter_definition)
         is_expected.to contain_exactly(expected_parameter)
       end
     end
