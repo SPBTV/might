@@ -1,7 +1,7 @@
-require 'mighty_fetcher/filter/parameter'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_parameter'
+require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::Filter::Parameter do
+RSpec.describe MightyFetcher::FilterParameter do
   before :all do
     I18n.backend.store_translations(:en,
       errors: {
@@ -15,7 +15,7 @@ RSpec.describe MightyFetcher::Filter::Parameter do
   end
 
   context '#provided?' do
-    let(:definition) { MightyFetcher::Filter::ParameterDefinition.new('test') }
+    let(:definition) { MightyFetcher::FilterParameterDefinition.new('test') }
 
     subject { described_class.new(value, predicate, definition) }
 
@@ -69,7 +69,7 @@ RSpec.describe MightyFetcher::Filter::Parameter do
       end
 
       let(:definition) do
-        MightyFetcher::Filter::ParameterDefinition.new(name, coerce: coerce)
+        MightyFetcher::FilterParameterDefinition.new(name, coerce: coerce)
       end
 
       context 'single value' do
@@ -90,7 +90,7 @@ RSpec.describe MightyFetcher::Filter::Parameter do
 
     context 'when coercion is not defined' do
       let(:definition) do
-        MightyFetcher::Filter::ParameterDefinition.new(name)
+        MightyFetcher::FilterParameterDefinition.new(name)
       end
 
       it 'is not coerced' do
@@ -111,7 +111,7 @@ RSpec.describe MightyFetcher::Filter::Parameter do
 
     context 'single value' do
       let(:definition) do
-        MightyFetcher::Filter::ParameterDefinition.new(name, validates: { inclusion: { in: %w(channels movies) } })
+        MightyFetcher::FilterParameterDefinition.new(name, validates: { inclusion: { in: %w(channels movies) } })
       end
 
       context 'when valid' do
@@ -133,7 +133,7 @@ RSpec.describe MightyFetcher::Filter::Parameter do
 
     context 'multiple values' do
       let(:definition) do
-        MightyFetcher::Filter::ParameterDefinition.new(name, validates: { inclusion: { in: %w(channels movies) } })
+        MightyFetcher::FilterParameterDefinition.new(name, validates: { inclusion: { in: %w(channels movies) } })
       end
 
       context 'when valid' do

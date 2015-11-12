@@ -1,10 +1,10 @@
-require 'mighty_fetcher/filter/middleware'
-require 'mighty_fetcher/filter/parameter'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_middleware'
+require 'mighty_fetcher/filter_parameter'
+require 'mighty_fetcher/filter_parameter_definition'
 require 'mighty_fetcher/validation_error'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::Filter::Middleware do
+RSpec.describe MightyFetcher::FilterMiddleware do
   before do
     3.times { |n| Page.create(name: "Page ##{n}") }
   end
@@ -18,7 +18,7 @@ RSpec.describe MightyFetcher::Filter::Middleware do
   context 'validates parameters' do
     let(:params) { {} }
     let(:definition) do
-      MightyFetcher::Filter::ParameterDefinition.new(:name, validates: { presence: true })
+      MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
     end
 
     it 'fail with error' do
@@ -32,7 +32,7 @@ RSpec.describe MightyFetcher::Filter::Middleware do
     let(:page) { pages.first }
     let(:params) { { filter: { 'name_eq' => page.name } } }
     let(:definition) do
-      MightyFetcher::Filter::ParameterDefinition.new(:name, validates: { presence: true })
+      MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
     end
 
     it 'returns filtered collection and not modified params' do

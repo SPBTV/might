@@ -1,6 +1,6 @@
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::Filter::ParameterDefinition do
+RSpec.describe MightyFetcher::FilterParameterDefinition do
   context '#as' do
     context 'when :as option given' do
       subject { described_class.new(:foo, as: :bar).as }
@@ -30,7 +30,7 @@ RSpec.describe MightyFetcher::Filter::ParameterDefinition do
       let(:options) { {} }
 
       it 'allow to use all predicates' do
-        is_expected.to contain_exactly(*MightyFetcher::Filter::Predicates::ALL)
+        is_expected.to contain_exactly(*MightyFetcher::FilterPredicates::ALL)
       end
     end
 

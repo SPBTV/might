@@ -1,11 +1,11 @@
 require 'set'
-require 'mighty_fetcher/filter/dsl'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_dsl'
+require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::Filter::DSL do
+RSpec.describe MightyFetcher::FilterDSL do
   let(:fetcher_class) do
     Class.new do
-      extend MightyFetcher::Filter::DSL
+      extend MightyFetcher::FilterDSL
     end
   end
 
@@ -17,7 +17,7 @@ RSpec.describe MightyFetcher::Filter::DSL do
 
   context 'add filter without predicates' do
     let(:filter) do
-      MightyFetcher::Filter::ParameterDefinition.new(:title, validates: { presence: true })
+      MightyFetcher::FilterParameterDefinition.new(:title, validates: { presence: true })
     end
 
     before do
@@ -31,7 +31,7 @@ RSpec.describe MightyFetcher::Filter::DSL do
 
   context 'add filter with white-listed predicates' do
     let(:filter) do
-      MightyFetcher::Filter::ParameterDefinition.new(:title, predicates: [:eq], validates: { presence: true })
+      MightyFetcher::FilterParameterDefinition.new(:title, predicates: [:eq], validates: { presence: true })
     end
 
     before do
@@ -45,7 +45,7 @@ RSpec.describe MightyFetcher::Filter::DSL do
 
   context 'add filter property with :as' do
     let(:property) do
-      MightyFetcher::Filter::ParameterDefinition.new(:foo, as: :bar)
+      MightyFetcher::FilterParameterDefinition.new(:foo, as: :bar)
     end
 
     before do

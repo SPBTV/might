@@ -1,8 +1,8 @@
-require 'mighty_fetcher/filter/parameters_validator'
-require 'mighty_fetcher/filter/parameter'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_parameters_validator'
+require 'mighty_fetcher/filter_parameter'
+require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::Filter::ParametersValidator do
+RSpec.describe MightyFetcher::FilterParametersValidator do
   let(:validator) do
     app = ->(env) { env[1] }
     described_class.new(app)
@@ -10,14 +10,14 @@ RSpec.describe MightyFetcher::Filter::ParametersValidator do
 
   context 'when some filter is required' do
     let(:definition) do
-      MightyFetcher::Filter::ParameterDefinition.new(:name, validates: { presence: true })
+      MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
     end
     def validate!(filter)
       validator.call([nil, [filter]])
     end
 
     context 'and it is not given' do
-      let(:filter) { MightyFetcher::Filter::Parameter.new(nil, nil, definition) }
+      let(:filter) { MightyFetcher::FilterParameter.new(nil, nil, definition) }
 
       it 'fails with error' do
         expect do
@@ -27,7 +27,7 @@ RSpec.describe MightyFetcher::Filter::ParametersValidator do
     end
 
     context 'and it is given' do
-      let(:filter) { MightyFetcher::Filter::Parameter.new('Bob', 'eq', definition) }
+      let(:filter) { MightyFetcher::FilterParameter.new('Bob', 'eq', definition) }
 
       it 'return found objects' do
         expect do

@@ -1,8 +1,8 @@
-require 'mighty_fetcher/filter/value_validator'
-require 'mighty_fetcher/filter/undefined_parameter'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/filter_value_validator'
+require 'mighty_fetcher/filter_undefined_parameter'
+require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::Filter::ValueValidator do
+RSpec.describe MightyFetcher::FilterValueValidator do
   before :all do
     I18n.backend.store_translations(:en,
       activemodel: {
@@ -20,7 +20,7 @@ RSpec.describe MightyFetcher::Filter::ValueValidator do
 
     context 'defined parameter' do
       let(:definition) do
-        MightyFetcher::Filter::ParameterDefinition.new('first_name', validates: { presence: { message: "can't be blank" } })
+        MightyFetcher::FilterParameterDefinition.new('first_name', validates: { presence: { message: "can't be blank" } })
       end
 
       context 'when valid value given' do
@@ -47,7 +47,7 @@ RSpec.describe MightyFetcher::Filter::ValueValidator do
 
     context 'undefined parameter' do
       let(:definition) do
-        MightyFetcher::Filter::UndefinedParameter.new('first_name')
+        MightyFetcher::FilterUndefinedParameter.new('first_name')
       end
 
       let(:value) { 'foo' }

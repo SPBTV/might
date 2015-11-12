@@ -1,11 +1,11 @@
-require 'mighty_fetcher/filter/ransackable/filter'
-require 'mighty_fetcher/filter/parameter'
-require 'mighty_fetcher/filter/parameter_definition'
+require 'mighty_fetcher/ransackable_filter'
+require 'mighty_fetcher/filter_parameter'
+require 'mighty_fetcher/filter_parameter_definition'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::Filter::Ransackable::Filter do
+RSpec.describe MightyFetcher::RansackableFilter do
   let(:definition) do
-    MightyFetcher::Filter::ParameterDefinition.new(:name)
+    MightyFetcher::FilterParameterDefinition.new(:name)
   end
 
   before do
