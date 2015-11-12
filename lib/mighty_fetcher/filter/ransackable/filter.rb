@@ -8,10 +8,10 @@ module MightyFetcher
           @app = app
         end
 
-        # @param env [<ActiveRecord::Relation, <MightyFetcher::Filter::Parameter>>]
+        # @param env [<ActiveRecord::Relation, Hash]
         #   * first element is a scope to be filtered
         #   * second is a hash with user provided filters
-        # @return [<ActiveRecord::Relation, <MightyFetcher::Filter::Parameter>]
+        # @return [<ActiveRecord::Relation, Hash]
         #
         def call(env)
           scope, filters = env
