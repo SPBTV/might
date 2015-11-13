@@ -7,14 +7,14 @@ module MightyFetcher
     end
 
     def call(env)
-      scope, parameters = env
+      scope, params = env
 
-      ransackable_parameters = Array(parameters).reject { |f| f.predicate.nil? }
+      ransackable_parameters = Array(params[:filter]).reject { |f| f.predicate.nil? }
                                  .each_with_object({}) do |filter, ransackable_filters|
         ransackable_filters[canonical_name_for(filter)] = filter.value
       end
 
-      app.call([scope, ransackable_parameters])
+      app.call([scope, params.merge(filter: ransackable_parameters)])
     end
 
     private

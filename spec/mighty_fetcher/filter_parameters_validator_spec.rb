@@ -13,7 +13,7 @@ RSpec.describe MightyFetcher::FilterParametersValidator do
       MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
     end
     def validate!(filter)
-      validator.call([nil, [filter]])
+      validator.call([nil, { filter: [filter] }])
     end
 
     context 'and it is not given' do

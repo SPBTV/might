@@ -11,9 +11,9 @@ module MightyFetcher
     # @return [<ActiveRecord::Relation, Hash]
     #
     def call(env)
-      scope, filters = env
-      filtered_scope = scope.ransack(filters).result
-      app.call([filtered_scope, filters])
+      scope, params = env
+      filtered_scope = scope.ransack(params[:filter]).result
+      app.call([filtered_scope, params])
     end
 
     private

@@ -24,7 +24,7 @@ module MightyFetcher
         b.use FilterParametersValidator
         b.use RansackableFilterParametersAdapter
         b.use RansackableFilter
-      end.call([scope, params[:filter]])
+      end.call([scope, params])
 
       app.call([filtered_scope, params])
     end

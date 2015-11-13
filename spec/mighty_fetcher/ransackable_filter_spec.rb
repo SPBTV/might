@@ -18,11 +18,11 @@ RSpec.describe MightyFetcher::RansackableFilter do
   subject do
     described_class
       .new(->(env) { env[0].all })
-      .call([pages, filters])
+      .call([pages, params])
   end
 
   context 'and no filters given' do
-    let(:filters) { {} }
+    let(:params) { {} }
 
     it 'return all objects' do
       is_expected.to contain_exactly(*pages)
@@ -30,7 +30,7 @@ RSpec.describe MightyFetcher::RansackableFilter do
   end
 
   context 'and filter given' do
-    let(:filters) { { 'name_eq' => page.name } }
+    let(:params) { { filter: { 'name_eq' => page.name } } }
 
     it 'return found objects' do
       is_expected.to contain_exactly(page)
@@ -38,7 +38,7 @@ RSpec.describe MightyFetcher::RansackableFilter do
   end
 
   context 'and no matching filter given' do
-    let(:filters) { { 'name_eq' => 'invalid' } }
+    let(:params) { { filter: { 'name_eq' => 'invalid' } } }
 
     it 'return no objects' do
       is_expected.to be_empty

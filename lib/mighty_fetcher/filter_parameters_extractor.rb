@@ -21,15 +21,15 @@ module MightyFetcher
       @parameters_definition = parameters_definition
     end
 
-    # @param env [<ActiveRecord::Relation, Hash>]
+    # @param env [<ActiveRecord::Relation, {:filter => Hash}>]
     #   * first element is a scope to be filtered
     #   * second is a hash with user provided filters
-    # @return [<ActiveRecord::Relation, <MightyFetcher::FilterParameter>]
+    # @return [<ActiveRecord::Relation, {:filter => <MightyFetcher::FilterParameter>}]
     #
     def call(env)
       scope, params = env
 
-      provided_parameters = Hash(params).each_with_object([]) do |(name, value), parameters|
+      provided_parameters = Hash(params[:filter]).each_with_object([]) do |(name, value), parameters|
         type_casted_value = type_cast_value(name, value)
         parameters << extract_parameter(name, type_casted_value)
       end
@@ -43,7 +43,7 @@ module MightyFetcher
       # Keep even undefined parameters to validate required ones
       filters = provided_parameters + undefined_parameters
 
-      app.call([scope, filters])
+      app.call([scope, params.merge(filter: filters)])
     end
 
     private

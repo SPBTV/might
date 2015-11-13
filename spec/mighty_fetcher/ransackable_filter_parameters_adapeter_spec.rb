@@ -7,7 +7,7 @@ RSpec.describe MightyFetcher::RansackableFilterParametersAdapter do
     described_class.new(->(env) { env[1] })
   end
 
-  subject { converter.call([nil, [parameter]]) }
+  subject { converter.call([nil, { filter: [parameter] }])[:filter] }
 
   context 'on association' do
     let(:definition) { MightyFetcher::FilterParameterDefinition.new(:name, on: 'person') }

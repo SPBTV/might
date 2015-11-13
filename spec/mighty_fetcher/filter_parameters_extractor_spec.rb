@@ -20,7 +20,7 @@ RSpec.describe MightyFetcher::FilterParametersExtractor do
         let(:parameter_definition) { MightyFetcher::FilterParameterDefinition.new(attribute) }
 
         subject do
-          extractor(parameter_definition).call([nil, { key => value }])
+          extractor(parameter_definition).call([nil, { filter: { key => value } }])[:filter]
         end
 
         it 'returns ransackable params' do
@@ -38,7 +38,7 @@ RSpec.describe MightyFetcher::FilterParametersExtractor do
         let(:parameter_definition) { MightyFetcher::FilterParameterDefinition.new(attribute) }
 
         subject do
-          extractor(parameter_definition).call([nil, { key => 'value1,value2' }])
+          extractor(parameter_definition).call([nil, { filter: { key => 'value1,value2' } }])[:filter]
         end
 
         it 'returns ransackable params' do
@@ -61,7 +61,7 @@ RSpec.describe MightyFetcher::FilterParametersExtractor do
       let(:parameter_definition) { MightyFetcher::FilterParameterDefinition.new(attribute) }
 
       subject(:filters) do
-        extractor(parameter_definition).call([nil, {}])
+        extractor(parameter_definition).call([nil, {}])[:filter]
       end
 
       it 'returns ransackable params' do
@@ -77,7 +77,7 @@ RSpec.describe MightyFetcher::FilterParametersExtractor do
       let(:parameter_definition) { MightyFetcher::FilterParameterDefinition.new(name, as: aliased) }
 
       subject do
-        extractor(parameter_definition).call([nil, {"#{aliased}_#{predicate}" => 'foo'}])
+        extractor(parameter_definition).call([nil, { filter: {"#{aliased}_#{predicate}" => 'foo'} }] )[:filter]
       end
 
       it 'returns ransackable params' do
