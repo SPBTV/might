@@ -9,28 +9,28 @@ RSpec.describe MightyFetcher::SortParametersValidator do
     described_class.new(app)
   end
 
-  def validate!(sort_order)
-    validator.call([nil, [sort_order]])
+  def validate!(params)
+    validator.call([nil, params])
   end
 
   context 'when not allowed sort order given' do
     let(:definition) { MightyFetcher::SortUndefinedParameter.new(:name) }
-    let(:sort_order) { MightyFetcher::SortParameter.new('asc', definition) }
+    let(:params) { { sort: MightyFetcher::SortParameter.new('asc', definition) } }
 
     it 'fails with error' do
       expect do
-        validate!(sort_order)
+        validate!(params)
       end.to raise_error(MightyFetcher::SortOrderValidationFailed)
     end
   end
 
   context 'when allowed sort order given' do
     let(:definition) { MightyFetcher::SortParameterDefinition.new(:name) }
-    let(:sort_order) { MightyFetcher::SortParameter.new('asc', definition) }
+    let(:params) { { sort: MightyFetcher::SortParameter.new('asc', definition) } }
 
     it 'fails with error' do
       expect do
-        validate!(sort_order)
+        validate!(params)
       end.not_to raise_error
     end
   end

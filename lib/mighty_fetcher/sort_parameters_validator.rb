@@ -14,15 +14,15 @@ module MightyFetcher
     # @raise MightyFetcher::SortOrderValidationFailed
     #
     def call(env)
-      scope, parameters = env
+      scope, params = env
 
-      not_allowed_parameters = parameters.select(&:invalid?)
+      not_allowed_parameters = Array(params[:sort]).select(&:invalid?)
 
       if not_allowed_parameters.any?
         fail MightyFetcher::SortOrderValidationFailed, not_allowed_parameters.map(&:errors)
       end
 
-      app.call([scope, parameters])
+      app.call([scope, params])
     end
 
     private

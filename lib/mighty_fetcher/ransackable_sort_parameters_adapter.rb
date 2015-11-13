@@ -7,13 +7,13 @@ module MightyFetcher
     end
 
     def call(env)
-      scope, parameters = env
+      scope, params = env
 
-      ransackable_parameters = Array(parameters).map do |parameter|
+      ransackable_parameters = Array(params[:sort]).map do |parameter|
         "#{parameter.name} #{parameter.direction}"
       end
 
-      app.call([scope, ransackable_parameters])
+      app.call([scope, params.merge(sort: ransackable_parameters)])
     end
 
     private

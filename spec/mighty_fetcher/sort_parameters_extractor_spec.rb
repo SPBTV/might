@@ -5,14 +5,14 @@ require 'mighty_fetcher/sort_parameter'
 
 RSpec.describe MightyFetcher::SortParametersExtractor do
   subject :extract do
-    described_class.new(->(env) { env[1] }, definitions).call([nil, params])
+    described_class.new(->(env) { env[1] }, definitions).call([nil, params])[:sort]
   end
 
   context 'when known sort order given' do
     context 'without direction' do
       let(:definition) { MightyFetcher::SortParameterDefinition.new(:name) }
       let(:definitions) { Set.new([definition]) }
-      let(:params) { 'name' }
+      let(:params) { { sort: 'name' } }
 
       it 'returns Parameters' do
         parameter = MightyFetcher::SortParameter.new(:asc, definition)
@@ -23,7 +23,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
     context 'with direction' do
       let(:definition) { MightyFetcher::SortParameterDefinition.new(:name) }
       let(:definitions) { Set.new([definition]) }
-      let(:params) { '-name' }
+      let(:params) { { sort:  '-name' } }
 
       it 'returns Parameters' do
         parameter = MightyFetcher::SortParameter.new(:desc, definition)
@@ -34,7 +34,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
     context 'with alias' do
       let(:definition) { MightyFetcher::SortParameterDefinition.new(:name, as: :title) }
       let(:definitions) { Set.new([definition]) }
-      let(:params) { 'title' }
+      let(:params) { { sort: 'title' } }
 
       it 'returns Parameters' do
         parameter = MightyFetcher::SortParameter.new(:asc, definition)
@@ -45,7 +45,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
     context 'with alias and direction' do
       let(:definition) { MightyFetcher::SortParameterDefinition.new(:name, as: :title) }
       let(:definitions) { Set.new([definition]) }
-      let(:params) { '-title' }
+      let(:params) { { sort: '-title' } }
 
       it 'returns Parameters' do
         parameter = MightyFetcher::SortParameter.new(:desc, definition)
@@ -57,7 +57,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
   context 'when not known sort order given' do
     context 'without direction' do
       let(:definitions) { Set.new([]) }
-      let(:params) { 'unknown' }
+      let(:params) { { sort: 'unknown' } }
 
       it 'returns Parameters' do
         parameter = MightyFetcher::SortParameter.new(:asc, MightyFetcher::SortUndefinedParameter.new('unknown'))
@@ -68,7 +68,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
     context 'aliased with another name' do
       let(:definition) { MightyFetcher::SortParameterDefinition.new(:name, as: :title) }
       let(:definitions) { Set.new([definition]) }
-      let(:params) { 'name' }
+      let(:params) { { sort: 'name' } }
 
       it 'is not accessible on original name' do
         parameter = MightyFetcher::SortParameter.new(:asc, MightyFetcher::SortUndefinedParameter.new('name'))
@@ -81,7 +81,7 @@ RSpec.describe MightyFetcher::SortParametersExtractor do
     let(:aliased_definition) { MightyFetcher::SortParameterDefinition.new(:name, as: :title) }
     let(:definition) { MightyFetcher::SortParameterDefinition.new(:surname) }
     let(:definitions) { Set.new([aliased_definition, definition]) }
-    let(:params) { 'undefined,-title,surname' }
+    let(:params) { { sort: 'undefined,-title,surname' } }
 
     it 'returns Parameters' do
       aliased_parameter = MightyFetcher::SortParameter.new(:desc, aliased_definition)

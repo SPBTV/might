@@ -29,11 +29,11 @@ module MightyFetcher
     def call(env)
       scope, params = env
 
-      parameters = sort_order(params).map do |(attribute, direction)|
+      sort_params = sort_order(params[:sort]).map do |(attribute, direction)|
         extract_parameter(attribute, direction)
       end
 
-      app.call([scope, parameters])
+      app.call([scope, params.merge(sort: sort_params)])
     end
 
     private

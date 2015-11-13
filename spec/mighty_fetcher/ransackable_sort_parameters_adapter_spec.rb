@@ -7,7 +7,7 @@ RSpec.describe MightyFetcher::RansackableSortParametersAdapter do
     described_class.new(->(env) { env[1] })
   end
 
-  subject { converter.call([nil, [parameter]]) }
+  subject { converter.call([nil, { sort: [parameter] }])[:sort] }
 
   context 'with normal direction' do
     let(:definition) { MightyFetcher::SortParameterDefinition.new(:name) }

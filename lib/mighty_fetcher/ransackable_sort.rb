@@ -15,7 +15,7 @@ module MightyFetcher
       scope, params = env
 
       ransackable_query = scope.ransack
-      ransackable_query.sorts = params
+      ransackable_query.sorts = params[:sort]
 
       app.call([ransackable_query.result, params])
     end

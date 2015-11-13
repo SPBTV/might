@@ -30,7 +30,7 @@ module MightyFetcher
         b.use SortParametersValidator
         b.use RansackableSortParametersAdapter
         b.use RansackableSort
-      end.call([scope, params[:sort]])
+      end.call([scope, params])
 
       app.call([sorted_scope, params])
     end

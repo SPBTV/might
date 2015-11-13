@@ -9,7 +9,7 @@ RSpec.describe MightyFetcher::RansackableSort do
   end
 
   it 'sort using ransack' do
-    scope, _ = call_middleware(['name asc'])
+    scope, _ = call_middleware(sort: ['name asc'])
     expect(scope.map(&:name)).to eq(['Page #0', 'Page #1', 'Page #2'])
   end
 end
