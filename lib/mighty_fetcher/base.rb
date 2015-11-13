@@ -49,9 +49,11 @@ module MightyFetcher
     inheritable_attr :resource_class
     inheritable_attr :filter_parameters_definition
     inheritable_attr :sort_parameters_definition
+    inheritable_attr :middleware_changes
 
     self.filter_parameters_definition = Set.new
     self.sort_parameters_definition = Set.new
+    self.middleware_changes = []
 
     # @return [Hash]
     attr_reader :params
@@ -73,7 +75,7 @@ module MightyFetcher
     #   end
     #
     def call
-      processed_collection, = self.class.middleware.call([collection, params])
+      processed_collection, = middleware.call([collection, params])
 
       if block_given?
         yield processed_collection
@@ -89,16 +91,41 @@ module MightyFetcher
       self.class.resource_class.all
     end
 
-    class << self
-      def middleware
-        @middleware ||= ::Middleware::Builder.new do |b|
-          b.use FilterMiddleware, filter_parameters_definition
-          b.use SortMiddleware, sort_parameters_definition
+    # Library middleware stack
+    # @return [Middleware::Builder]
+    def default_middleware
+      Middleware::Builder.new do |b|
+        b.use FilterMiddleware, self.class.filter_parameters_definition
+        b.use SortMiddleware, self.class.sort_parameters_definition
+      end
+    end
+
+    # User modified middleware stack
+    # @return [Middleware::Builder]
+    def middleware
+      default_middleware.tap do |builder|
+        self.class.middleware_changes.each do |change|
+          builder.instance_eval(&change)
         end
       end
+    end
 
-      def middleware=(value)
-        @middleware = value
+    class << self
+      # Alter middleware chain with the given block
+      # @param [Proc] change
+      # @return [MightyFetcher]
+      #
+      # @example
+      #   class ChannelsFetcher
+      #     middleware do
+      #       use CustomMiddleware
+      #     end
+      #   end
+      #
+      def middleware(&change)
+        fail ArgumentError unless block_given?
+        middleware_changes << change
+        self
       end
 
       # Register collection sorting by its name
@@ -171,7 +198,7 @@ module MightyFetcher
       #   end
       #
       def after(&block)
-        alter_middleware :use, &block
+        alter_middleware(:use, &block)
       end
 
       # Add middleware to the beginning of middleware chane
@@ -196,27 +223,29 @@ module MightyFetcher
       #   end
       #
       def before(middleware_or_index = 0, &block)
-        alter_middleware :insert_before, middleware_or_index, &block
+        alter_middleware(:insert_before, middleware_or_index, &block)
       end
 
       private
 
       def alter_middleware(method_name, *args, &block)
         fail ArgumentError unless block_given?
-        middleware.send method_name, *args, lambda { |env|
-          scope, params = env
-          case block.arity
-          when 1
-            [block.call(scope), params]
-          when 2
-            block.call(scope, params).tap do |r|
-              if !r.is_a?(Array) || r.size != 2
-                fail 'After block must return tuple of scope and params'
+        middleware_changes.push lambda { |builder|
+          builder.send method_name, *args, lambda { |env|
+            scope, params = env
+            case block.arity
+            when 1
+              [block.call(scope), params]
+            when 2
+              block.call(scope, params).tap do |r|
+                if !r.is_a?(Array) || r.size != 2
+                  fail 'After block must return tuple of scope and params'
+                end
               end
+            else
+              fail "Wrong number of arguments (#{block.arity} for 0..2)"
             end
-          else
-            fail "Wrong number of arguments (#{block.arity} for 0..2)"
-          end
+          }
         }
       end
     end

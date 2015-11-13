@@ -12,8 +12,10 @@ RSpec.describe MightyFetcher::Base do
 
       Class.new(described_class) do
         self.resource_class = klass
-        self.middleware = ::Middleware::Builder.new do |b|
-          b.use ->(_) { processed_collection }
+        define_method :default_middleware do
+          ::Middleware::Builder.new do |b|
+            b.use ->(_) { processed_collection }
+          end
         end
       end
     end
