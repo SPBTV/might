@@ -1,16 +1,14 @@
 require 'set'
-require 'mighty_fetcher/sort_dsl'
+require 'mighty_fetcher/base'
 require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::SortDSL do
+RSpec.describe MightyFetcher::Base, 'Sort DSL' do
   let(:fetcher_class) do
-    Class.new do
-      extend MightyFetcher::SortDSL
-    end
+    Class.new(described_class)
   end
 
   before do
-    fetcher_class.instance_variable_set(:@sort_parameters_definition, Set.new)
+    fetcher_class.sort_parameters_definition = Set.new
   end
 
   context '#sort' do

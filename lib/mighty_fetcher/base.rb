@@ -1,7 +1,9 @@
 require 'active_support/core_ext/module/delegation'
 require 'mighty_fetcher/filter_middleware'
+require 'mighty_fetcher/sort_middleware'
 require 'uber/inheritable_attr'
 require 'middleware'
+require 'active_support/core_ext/class/attribute'
 
 #
 module MightyFetcher
@@ -23,17 +25,33 @@ module MightyFetcher
   #
   # So the Movie#kind property would be exposed to API as :type
   #
+  # You may specify allowed sorting order:
+  #
+  #     sort :id
+  #     sort :name
+  #
+  # If your property name doesn't match the name in the query string, use the :as option:
+  #
+  #     sort :position, as: :relevance
+  #
+  # So client should pass +?sort=relevance+ in order to sort by position
+  #
+  # It's also possible to reverse meaning of the order direction. For example it's not
+  # make sense to order by position from lower value to higher.
+  # The meaning default for that sorting is reversed order by default, so more relevant elenents
+  # would be the first.
+  #
+  #     sort :position, as: :relevance, reverse_direction: true
+  #
   class Base
     extend Uber::InheritableAttr
 
     inheritable_attr :resource_class
-    inheritable_attr :filter_parameters_definition, clone: false
-    inheritable_attr :middleware
+    inheritable_attr :filter_parameters_definition
+    inheritable_attr :sort_parameters_definition
 
     self.filter_parameters_definition = Set.new
-    self.middleware = ::Middleware::Builder.new do |b|
-      b.use FilterMiddleware, filter_parameters_definition
-    end
+    self.sort_parameters_definition = Set.new
 
     # @return [Hash]
     attr_reader :params
@@ -72,6 +90,27 @@ module MightyFetcher
     end
 
     class << self
+      def middleware
+        @middleware ||= ::Middleware::Builder.new do |b|
+          b.use FilterMiddleware, filter_parameters_definition
+          b.use SortMiddleware, sort_parameters_definition
+        end
+      end
+
+      def middleware=(value)
+        @middleware = value
+      end
+
+      # Register collection sorting by its name
+      # @param name [Symbol] of the field
+      # @return [void]
+      # @see +RansackableSort+ for details
+      #
+      def sort(name, options = {})
+        definition = SortParameterDefinition.new(name, options)
+        sort_parameters_definition.add(definition)
+      end
+
       # Register collection filter by its name
       # @see +MightyFetcher::Filter+ for details
       #

@@ -46,7 +46,7 @@ module MightyFetcher
     end
 
     def sort_order(params)
-      params.split(',').map do |attribute|
+      String(params).split(',').map do |attribute|
         sorting_for(attribute)
       end
     end

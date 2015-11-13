@@ -34,4 +34,36 @@ RSpec.describe MightyFetcher::Base do
       end
     end
   end
+
+  context 'filter, sorting and inheritance' do
+    require 'database_helper'
+
+    let(:page_fetcher) do
+      Class.new(MightyFetcher::Base) do
+        filter :name
+
+        self.resource_class = Page
+      end
+    end
+
+    let(:another_page_fetcher) do
+      Class.new(page_fetcher) do
+        filter :slug
+        sort :name
+      end
+    end
+
+    it '' do
+      params = {
+        filter: {
+          'name_not_eq' => 'Page #1',
+          'slug_not_eq' => ''
+        },
+        sort: '-name'
+      }
+      pages = another_page_fetcher.new(params).call.map(&:name)
+
+      expect(pages).to eq(['Page #2', 'Page #0'])
+    end
+  end
 end
