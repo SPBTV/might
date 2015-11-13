@@ -1,54 +1,57 @@
 require 'mighty_fetcher/base'
-require_relative 'inserted middleware_examples'
 
 RSpec.describe MightyFetcher::Base, 'middleware stack builder' do
+  require_relative 'inserted middleware_examples'
   include_examples 'inserted middleware', :after
   include_examples 'inserted middleware', :before
 
-  context 'middleware may be configured' do
-    def fetcher_class
-      klass = double('resource_class', all: [])
-      # Define imaginary DSL with memoizable options
-      dsl = Module.new do
-        def option(name)
-          options.push(name)
+  context 'modification and DSL methods' do
+    require 'database_helper'
+
+    let(:page) { Page.first }
+
+    describe '.filter' do
+      let(:params) do
+        { filter: { 'name_eq' => page.name } }
+      end
+
+      subject { page_fetcher.new(params).call }
+
+      context 'when filter applied after middleware modification' do
+        let(:page_fetcher) do
+          Class.new(MightyFetcher::Base) do
+            after do |scope, params|
+              [scope, params]
+            end
+
+            filter :name
+
+            self.resource_class = Page
+          end
         end
 
-        def options
-          @options ||= []
+        it 'it may be filtered' do
+          is_expected.to contain_exactly(page)
         end
       end
 
-      Class.new(described_class) do
-        extend dsl
-        self.resource_class = klass
+      context 'when filter applied before middleware modification' do
+        let(:page_fetcher) do
+          Class.new(MightyFetcher::Base) do
+            filter :name
 
-        self.middleware = ::Middleware::Builder.new do |b|
-          b.use ->(_env, options) { options }, self.options
+            after do |scope, params|
+              [scope, params]
+            end
+
+            self.resource_class = Page
+          end
         end
 
-        option :foo
-
-        middleware.use ->(options) { options }
-
-        option :bar
+        it 'it may be filtered' do
+          is_expected.to contain_exactly(page)
+        end
       end
-    end
-
-    subject { fetcher_class.middleware.call }
-
-    it 'contains option added before changing middleware' do
-      is_expected.to include(:foo)
-    end
-
-    it 'contains option added after changing middleware' do
-      is_expected.to include(:bar)
-    end
-
-    it 'it does not affect base class middleware' do
-      base_middlewares = described_class.middleware.inspect
-      subclass_middlewares = fetcher_class.middleware.inspect
-      expect(base_middlewares).not_to eq(subclass_middlewares)
     end
   end
 end

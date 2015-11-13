@@ -5,10 +5,6 @@ require 'mighty_fetcher/validation_error'
 require 'database_helper'
 
 RSpec.describe MightyFetcher::FilterMiddleware do
-  before do
-    3.times { |n| Page.create(name: "Page ##{n}") }
-  end
-
   let(:pages) { Page.all }
 
   def call_middleware(definition, params)

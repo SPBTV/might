@@ -1,4 +1,5 @@
 require 'active_support/core_ext/module/delegation'
+require 'mighty_fetcher/filter_middleware'
 require 'uber/inheritable_attr'
 require 'middleware'
 
@@ -6,17 +7,33 @@ require 'middleware'
 module MightyFetcher
   # Configure your own fetcher
   #
-  #   PagesFetcher < MightyFetcher::Base
-  #     self.resource_class = Page
-  #   end
+  #     PagesFetcher < MightyFetcher::Base
+  #       self.resource_class = Page
+  #     end
+  #
+  # You can configure filterable attributes for model
+  #
+  #     filter :id, validates: { presence: true }
+  #     filter :name
+  #     filter :start_at, validates: { presence: true }
+  #
+  # If your property name doesn't match the name in the query string, use the :as option:
+  #
+  #     filter :kind, as: :type
+  #
+  # So the Movie#kind property would be exposed to API as :type
   #
   class Base
     extend Uber::InheritableAttr
 
     inheritable_attr :resource_class
+    inheritable_attr :filter_parameters_definition, clone: false
     inheritable_attr :middleware
 
-    self.middleware = ::Middleware::Builder.new
+    self.filter_parameters_definition = Set.new
+    self.middleware = ::Middleware::Builder.new do |b|
+      b.use FilterMiddleware, filter_parameters_definition
+    end
 
     # @return [Hash]
     attr_reader :params
@@ -55,6 +72,38 @@ module MightyFetcher
     end
 
     class << self
+      # Register collection filter by its name
+      # @see +MightyFetcher::Filter+ for details
+      #
+      # @overload filter(filter_name, options)
+      #   @param [Symbol] filter_name
+      #   @param [Hash] options
+      #   @return [void]
+      # @example
+      #   filter :genre_name, on: :resource
+      #
+      # @overload filter(filter_name: predicates, **options)
+      #   @param [Symbol] filter_name
+      #   @param [<Symbol>] predicates
+      #   @param [Hash] other options options
+      #   @return [void]
+      # @example
+      #   filter genre_name: [:eq, :in], on: :resource
+      #
+      def filter(*args)
+        options = args.extract_options!
+        if args.empty?
+          filter_name = options.keys.first
+          predicates = options.values.first
+          options = options.except(filter_name).merge(predicates: predicates)
+        else
+          filter_name = args.first
+        end
+
+        definition = FilterParameterDefinition.new(filter_name, options)
+        filter_parameters_definition.add(definition)
+      end
+
       # @param params [Hash] user provided input
       # @yieldparam collection [ActiveRecord::Relation]
       def run(params, &block)

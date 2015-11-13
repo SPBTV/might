@@ -3,11 +3,6 @@ require 'mighty_fetcher/sort_parameter_definition'
 require 'database_helper'
 
 RSpec.describe MightyFetcher::SortMiddleware do
-  before do
-    2.downto(0).each do |n|
-      Page.create(name: n)
-    end
-  end
   let(:pages) { Page.all }
 
   let(:parameters_definition) do
@@ -33,7 +28,7 @@ RSpec.describe MightyFetcher::SortMiddleware do
 
     it 'returns sorted collection and not modified params' do
       scope, parameters = call_middleware(parameters_definition, params)
-      expect(scope.map(&:name)).to eq(%w(0 1 2))
+      expect(scope.map(&:name)).to eq(['Page #0', 'Page #1', 'Page #2'])
       expect(parameters).to eq(params)
     end
   end
