@@ -1,8 +1,8 @@
-require 'mighty_fetcher/ransackable_sort_parameters_converter'
+require 'mighty_fetcher/ransackable_sort_parameters_adapter'
 require 'mighty_fetcher/sort_parameter'
 require 'mighty_fetcher/sort_parameter_definition'
 
-RSpec.describe MightyFetcher::RansackableSortParametersConverter do
+RSpec.describe MightyFetcher::RansackableSortParametersAdapter do
   let(:converter) do
     described_class.new(->(env) { env[1] })
   end

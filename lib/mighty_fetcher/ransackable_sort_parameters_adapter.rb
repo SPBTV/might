@@ -1,7 +1,7 @@
 module MightyFetcher
   # Converts array of parameters to hash familiar to ransack gem
   #
-  class RansackableSortParametersConverter
+  class RansackableSortParametersAdapter
     def initialize(app)
       @app = app
     end

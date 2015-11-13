@@ -1,5 +1,5 @@
 require 'mighty_fetcher/validation_error'
-require 'mighty_fetcher/ransackable_sort_parameters_converter'
+require 'mighty_fetcher/ransackable_sort_parameters_adapter'
 require 'mighty_fetcher/ransackable_sort'
 require 'mighty_fetcher/sort_parameters_validator'
 require 'mighty_fetcher/sort_parameters_extractor'
@@ -28,7 +28,7 @@ module MightyFetcher
       sorted_scope, _ = ::Middleware::Builder.new do |b|
         b.use SortParametersExtractor, parameters_definition
         b.use SortParametersValidator
-        b.use RansackableSortParametersConverter
+        b.use RansackableSortParametersAdapter
         b.use RansackableSort
       end.call([scope, params[:sort]])
 

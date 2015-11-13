@@ -1,8 +1,8 @@
-require 'mighty_fetcher/ransackable_filter_parameters_converter'
+require 'mighty_fetcher/ransackable_filter_parameters_adapter'
 require 'mighty_fetcher/filter_parameter'
 require 'mighty_fetcher/filter_parameter_definition'
 
-RSpec.describe MightyFetcher::RansackableFilterParametersConverter do
+RSpec.describe MightyFetcher::RansackableFilterParametersAdapter do
   let(:converter) do
     described_class.new(->(env) { env[1] })
   end
