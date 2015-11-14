@@ -15,12 +15,12 @@ module MightyFetcher
     end
 
     def call(env)
-      result = ::Middleware::Builder.new do |b|
+      scope, _ = ::Middleware::Builder.new do |b|
         b.use RansackableFilterParametersAdapter
         b.use RansackableFilter
       end.call(env)
 
-      app.call(result)
+      app.call([scope, env[1]])
     end
 
     private

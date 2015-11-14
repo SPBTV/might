@@ -20,6 +20,6 @@ RSpec.describe MightyFetcher::FilterMiddleware do
   it 'returns filtered collection and not modified params' do
     scope, parameters = call_middleware(params)
     expect(scope).to contain_exactly(page)
-    expect(parameters).to eq(filter: { 'name_eq' => page.name })
+    expect(parameters).to eq(params)
   end
 end

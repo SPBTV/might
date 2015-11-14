@@ -98,7 +98,9 @@ module MightyFetcher
         b.use FilterParametersExtractor, self.class.filter_parameters_definition
         b.use FilterParametersValidator
         b.use FilterMiddleware
-        b.use SortMiddleware, self.class.sort_parameters_definition
+        b.use SortParametersExtractor, self.class.sort_parameters_definition
+        b.use SortParametersValidator
+        b.use SortMiddleware
       end
     end
 

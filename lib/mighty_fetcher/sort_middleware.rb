@@ -10,29 +10,24 @@ module MightyFetcher
   #
   class SortMiddleware
     # @param app [#call]
-    # @param parameters_definition [Set<MightyFetcher::RansackableSort:ParametersDefinition>] parameters to sort by
     #
-    def initialize(app, parameters_definition)
+    def initialize(app)
       @app = app
-      @parameters_definition = parameters_definition
     end
 
-    attr_reader :app, :parameters_definition
+    attr_reader :app
 
     # @param [Array(ActiveRecord::Relation, Hash)] env
     # First argument is a ActiveRecord relation which must be sorted
     # Second argument is a request parameters provided by user
     #
     def call(env)
-      scope, params = env
-      sorted_scope, _ = ::Middleware::Builder.new do |b|
-        b.use SortParametersExtractor, parameters_definition
-        b.use SortParametersValidator
+      scope, _ = ::Middleware::Builder.new do |b|
         b.use RansackableSortParametersAdapter
         b.use RansackableSort
-      end.call([scope, params])
+      end.call(env)
 
-      app.call([sorted_scope, params])
+      app.call([scope, env[1]])
     end
   end
 end
