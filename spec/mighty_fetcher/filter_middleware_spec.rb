@@ -2,39 +2,24 @@ require 'mighty_fetcher/filter_middleware'
 require 'mighty_fetcher/filter_parameter'
 require 'mighty_fetcher/filter_parameter_definition'
 require 'mighty_fetcher/validation_error'
+require 'set'
 require 'database_helper'
 
 RSpec.describe MightyFetcher::FilterMiddleware do
-  let(:pages) { Page.all }
-
-  def call_middleware(definition, params)
-    described_class.new(->(env) { env }, Set.new([definition])).call([pages, params])
+  let(:params) { { filter: Set.new([parameter]) } }
+  let(:page) { Page.first }
+  let(:parameter) { MightyFetcher::FilterParameter.new(page.name, 'eq', definition) }
+  let(:definition) do
+    MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
   end
 
-  context 'validates parameters' do
-    let(:params) { {} }
-    let(:definition) do
-      MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
-    end
-
-    it 'fail with error' do
-      expect do
-        call_middleware(definition, params)
-      end.to raise_error(MightyFetcher::FilterValidationFailed)
-    end
+  def call_middleware(params)
+    described_class.new(->(env) { env }).call([Page.all, params])
   end
 
-  context 'filters scope' do
-    let(:page) { pages.first }
-    let(:params) { { filter: { 'name_eq' => page.name } } }
-    let(:definition) do
-      MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
-    end
-
-    it 'returns filtered collection and not modified params' do
-      scope, parameters = call_middleware(definition, params)
-      expect(scope).to contain_exactly(page)
-      expect(parameters).to eq(params)
-    end
+  it 'returns filtered collection and not modified params' do
+    scope, parameters = call_middleware(params)
+    expect(scope).to contain_exactly(page)
+    expect(parameters).to eq(filter: { 'name_eq' => page.name })
   end
 end

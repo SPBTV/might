@@ -9,28 +9,22 @@ module MightyFetcher
   #
   class FilterMiddleware
     # @param app [#call, Proc]
-    # @param parameters_definition [Set<String>] is a names of allowed parameters to filter on
     #
-    def initialize(app, parameters_definition)
+    def initialize(app)
       @app = app
-      @parameters_definition = parameters_definition
     end
 
     def call(env)
-      scope, params = env
-
-      filtered_scope, _ = ::Middleware::Builder.new do |b|
-        b.use FilterParametersExtractor, parameters_definition
-        b.use FilterParametersValidator
+      result = ::Middleware::Builder.new do |b|
         b.use RansackableFilterParametersAdapter
         b.use RansackableFilter
-      end.call([scope, params])
+      end.call(env)
 
-      app.call([filtered_scope, params])
+      app.call(result)
     end
 
     private
 
-    attr_reader :parameters_definition, :app
+    attr_reader :app
   end
 end

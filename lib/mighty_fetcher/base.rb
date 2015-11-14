@@ -95,7 +95,9 @@ module MightyFetcher
     # @return [Middleware::Builder]
     def default_middleware
       Middleware::Builder.new do |b|
-        b.use FilterMiddleware, self.class.filter_parameters_definition
+        b.use FilterParametersExtractor, self.class.filter_parameters_definition
+        b.use FilterParametersValidator
+        b.use FilterMiddleware
         b.use SortMiddleware, self.class.sort_parameters_definition
       end
     end
