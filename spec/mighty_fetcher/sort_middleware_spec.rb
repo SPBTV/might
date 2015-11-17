@@ -4,7 +4,7 @@ require 'mighty_fetcher/sort_parameter_definition'
 require 'set'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::SortMiddleware do
+RSpec.describe MightyFetcher::SortMiddleware, database: true do
   let(:params) { { sort: Set.new([parameter]) } }
   let(:parameter) { MightyFetcher::SortParameter.new('asc', parameters_definition) }
   let(:parameters_definition) { MightyFetcher::SortParameterDefinition.new('name') }

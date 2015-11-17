@@ -25,12 +25,12 @@ end
 require 'fixtures/page'
 
 RSpec.configure do |config|
-  config.before(:all) do
+  config.before :all, database: true do
     Schema.create
     3.times { |n| Page.create!(name: "Page ##{n}") }
   end
 
-  config.after(:all) do
+  config.after :all, database: true do
     Page.delete_all
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe MightyFetcher::Base, 'middleware stack builder' do
   include_examples 'inserted middleware', :after
   include_examples 'inserted middleware', :before
 
-  context 'modification and DSL methods' do
+  context 'modification and DSL methods', database: true do
     require 'database_helper'
 
     let(:page) { Page.first }

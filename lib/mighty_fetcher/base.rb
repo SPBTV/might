@@ -75,7 +75,9 @@ module MightyFetcher
     #   end
     #
     def call
-      processed_collection, = middleware.call([collection, params])
+      processed_params, _ = process_params(params)
+
+      processed_collection, = middleware.call([collection, processed_params])
 
       if block_given?
         yield processed_collection
@@ -95,11 +97,7 @@ module MightyFetcher
     # @return [Middleware::Builder]
     def default_middleware
       Middleware::Builder.new do |b|
-        b.use FilterParametersExtractor, self.class.filter_parameters_definition
-        b.use FilterParametersValidator
         b.use FilterMiddleware
-        b.use SortParametersExtractor, self.class.sort_parameters_definition
-        b.use SortParametersValidator
         b.use SortMiddleware
       end
     end
@@ -112,6 +110,17 @@ module MightyFetcher
           builder.instance_eval(&change)
         end
       end
+    end
+
+    # @return [Hash, Array] tuple of parameters and processing errors
+    #   this errors may be shown to front-end developer
+    def process_params(params)
+      Middleware::Builder.new do |b|
+        b.use FilterParametersExtractor, self.class.filter_parameters_definition
+        b.use FilterParametersValidator
+        b.use SortParametersExtractor, self.class.sort_parameters_definition
+        b.use SortParametersValidator
+      end.call([params, nil])
     end
 
     class << self

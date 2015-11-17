@@ -17,6 +17,10 @@ RSpec.describe MightyFetcher::Base do
             b.use ->(_) { processed_collection }
           end
         end
+
+        define_method :process_params do |params|
+          [params, []]
+        end
       end
     end
 
@@ -37,7 +41,7 @@ RSpec.describe MightyFetcher::Base do
     end
   end
 
-  context 'filter, sorting and inheritance' do
+  context 'filter, sorting and inheritance', database: true do
     require 'database_helper'
 
     let(:page_fetcher) do

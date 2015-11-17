@@ -1,7 +1,7 @@
 require 'mighty_fetcher/ransackable_sort'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::RansackableSort do
+RSpec.describe MightyFetcher::RansackableSort, database: true do
   let(:pages) { Page.all }
 
   def call_middleware(params)

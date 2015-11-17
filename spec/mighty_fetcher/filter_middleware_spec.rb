@@ -5,7 +5,7 @@ require 'mighty_fetcher/validation_error'
 require 'set'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::FilterMiddleware do
+RSpec.describe MightyFetcher::FilterMiddleware, database: true do
   let(:params) { { filter: Set.new([parameter]) } }
   let(:page) { Page.first }
   let(:parameter) { MightyFetcher::FilterParameter.new(page.name, 'eq', definition) }

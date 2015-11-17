@@ -9,18 +9,18 @@ module MightyFetcher
       @app = app
     end
 
-    # @param env [<ActiveRecord::Relation, {:filter => Set<MightyFetcher::FilterParameter>}]
-    # @return [<ActiveRecord::Relation, {:filter => Set<MightyFetcher::FilterParameter>}]
+    # @param env [<{:filter => Set<MightyFetcher::FilterParameterm, []>}]
+    # @return [<{:filter => Set<MightyFetcher::FilterParameter, []>}]
     # @raise MightyFetcher::FilterValidationFailed
     #
     def call(env)
-      scope, params = env
+      params, errors = env
       invalid_filters = Array(params[:filter]).select(&:invalid?)
 
       if invalid_filters.any?
         fail MightyFetcher::FilterValidationFailed, invalid_filters.map(&:errors)
       end
-      app.call([scope, params])
+      app.call([params, errors])
     end
 
     private

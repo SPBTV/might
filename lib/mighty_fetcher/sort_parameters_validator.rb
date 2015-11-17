@@ -9,12 +9,12 @@ module MightyFetcher
       @app = app
     end
 
-    # @param env [<ActiveRecord::Relation, Set<MightyFetcher::RansackableSort::SortParameter>]
-    # @return [<ActiveRecord::Relation, Set<MightyFetcher::RansackableSort::SortParameter>]
+    # @param env [<Set<MightyFetcher::RansackableSort::SortParameter, []>]
+    # @return [<Set<MightyFetcher::RansackableSort::SortParameter, []>]
     # @raise MightyFetcher::SortOrderValidationFailed
     #
     def call(env)
-      scope, params = env
+      params, errors = env
 
       not_allowed_parameters = Array(params[:sort]).select(&:invalid?)
 
@@ -22,7 +22,7 @@ module MightyFetcher
         fail MightyFetcher::SortOrderValidationFailed, not_allowed_parameters.map(&:errors)
       end
 
-      app.call([scope, params])
+      app.call([params, errors])
     end
 
     private

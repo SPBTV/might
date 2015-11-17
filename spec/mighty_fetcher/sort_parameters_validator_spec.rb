@@ -5,12 +5,12 @@ require 'mighty_fetcher/sort_undefined_parameter'
 
 RSpec.describe MightyFetcher::SortParametersValidator do
   let(:validator) do
-    app = ->(env) { env[1] }
+    app = ->(env) { env[0] }
     described_class.new(app)
   end
 
   def validate!(params)
-    validator.call([nil, params])
+    validator.call([params, nil])
   end
 
   context 'when not allowed sort order given' do

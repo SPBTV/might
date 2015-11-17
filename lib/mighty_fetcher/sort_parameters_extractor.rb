@@ -21,19 +21,19 @@ module MightyFetcher
       @parameters_definition = parameters_definition
     end
 
-    # @param env [<ActiveRecord::Relation, String>]
+    # @param env [<String, []>]
     #   * first element is a scope to be sorted
     #   * second is a String with user provided sortings
-    # @return [<ActiveRecord::Relation, <MightyFetcher::RansackableSort::SortParameter>]
+    # @return [<<MightyFetcher::RansackableSort::SortParameter, []>]
     #
     def call(env)
-      scope, params = env
+      params, errors = env
 
       sort_params = sort_order(params[:sort]).map do |(attribute, direction)|
         extract_parameter(attribute, direction)
       end
 
-      app.call([scope, params.merge(sort: sort_params)])
+      app.call([params.merge(sort: sort_params), errors])
     end
 
     private

@@ -5,7 +5,7 @@ require 'mighty_fetcher/sort_parameter'
 
 RSpec.describe MightyFetcher::SortParametersExtractor do
   subject :extract do
-    described_class.new(->(env) { env[1] }, definitions).call([nil, params])[:sort]
+    described_class.new(->(env) { env[0] }, definitions).call([params, nil])[:sort]
   end
 
   context 'when known sort order given' do

@@ -4,7 +4,7 @@ require 'mighty_fetcher/filter_parameter_definition'
 
 RSpec.describe MightyFetcher::FilterParametersValidator do
   let(:validator) do
-    app = ->(env) { env[1] }
+    app = ->(env) { env[0] }
     described_class.new(app)
   end
 
@@ -13,7 +13,7 @@ RSpec.describe MightyFetcher::FilterParametersValidator do
       MightyFetcher::FilterParameterDefinition.new(:name, validates: { presence: true })
     end
     def validate!(filter)
-      validator.call([nil, { filter: [filter] }])
+      validator.call([{ filter: [filter] }, ])
     end
 
     context 'and it is not given' do

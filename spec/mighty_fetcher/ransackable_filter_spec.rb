@@ -3,7 +3,7 @@ require 'mighty_fetcher/filter_parameter'
 require 'mighty_fetcher/filter_parameter_definition'
 require 'database_helper'
 
-RSpec.describe MightyFetcher::RansackableFilter do
+RSpec.describe MightyFetcher::RansackableFilter, database: true do
   let(:definition) do
     MightyFetcher::FilterParameterDefinition.new(:name)
   end
