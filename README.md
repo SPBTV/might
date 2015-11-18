@@ -1,4 +1,4 @@
-# MightyFetcher
+# Might
 
 Mighty Fetcher utilizes the power of Ransack gem to provide models gathering api for Rails' controllers.
 
@@ -7,7 +7,7 @@ Mighty Fetcher utilizes the power of Ransack gem to provide models gathering api
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mighty_fetcher'
+gem 'might'
 ```
 
 And then execute:
@@ -16,14 +16,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install mighty_fetcher
+    $ gem install might
 
 ## Usage
 
 Define a Mighty Fetcher
 
 ```ruby
-class ChannelFetcher < MightyFetcher::Base
+class ChannelFetcher < Might::Fetcher
   # Specify resource to be fetched
   self.resource_class = Channel
 
@@ -71,7 +71,7 @@ ChannelFetcher.run(params) #=> ChannelFetcher::Result
 * `:sort` key is used for sorting
 * `:page` key is used for pagination
 
-The result of evaluating `#run` method is `MightyFetcher::Result`. It may be either success or failure.
+The result of evaluating `#run` method is `Might::Result`. It may be either success or failure.
 This container have the following api:
 
 * `#success?` - `true` if result is `Success`, false otherwise
@@ -186,7 +186,7 @@ class Location < ActiveRecord::Base
   belongs_to :locatable, polymorphic: true
 end
 
-class LocationFetcher < MightyFetcher::Base
+class LocationFetcher < Might::Fetcher
   filter :locatable_id, on: { resource: ['House'] }
 end
 ```
@@ -197,7 +197,7 @@ User provided filters may be validated using `ActiveModel::Validation`
 filter registration_number: :eq, validates: { length: { is: 6 } }
 ```
 
-If value of the `registration_number` is invalid it raises `MightyFetcher::FilterValidationFailed`.
+If value of the `registration_number` is invalid it raises `Might::FilterValidationFailed`.
 
 #### List of all supported predicates
 
@@ -257,8 +257,8 @@ You can disable sorting, pagination and filtering altering middleware chain.
 
 ```ruby
 class ChannelFetch < Fetch
-  middleware.delete MightyFetcher::Middleware::Filter
-  middleware.insert_before MightyFetcher::Middleware::Sort, CustomFilterMiddleware
+  middleware.delete Might::FilterMiddleware
+  middleware.insert_before Might::SortMiddleware, CustomFilterMiddleware
   middleware.use AnotherMiddleware
 end
 ```
@@ -266,7 +266,7 @@ end
 If you need do perform some actions before or after middleware chain:
 
 ```ruby
-class FavoritesFetcher < MightyFetcher::Base
+class FavoritesFetcher < Might::Fetcher
   before do |favorites, params|
     [favorites.by_user(params[:user]), params]
   end
@@ -274,7 +274,7 @@ end
 ```
 
 ```ruby
-class AccessesFetcher < MightyFetcher::Base
+class AccessesFetcher < Might::Base
   after do |resources|
     resources.map { |r| Access.new(r) }
   end
@@ -284,7 +284,7 @@ end
 To get translated error messages load Rails Railtie
 
 ```ruby
-require 'mighty_fetcher/railtie
+require 'might/railtie
 ```
 
 ## Development
