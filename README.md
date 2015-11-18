@@ -273,14 +273,6 @@ class FavoritesFetcher < Might::Fetcher
 end
 ```
 
-```ruby
-class AccessesFetcher < Might::Base
-  after do |resources|
-    resources.map { |r| Access.new(r) }
-  end
-end
-```
-
 To get translated error messages load Rails Railtie
 
 ```ruby

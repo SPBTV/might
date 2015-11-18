@@ -207,18 +207,6 @@ module Might
       end
 
       # Add middleware to the end of middleware chane
-      # When only one argument given, it is treated as scope. So the lambda must
-      # return modified scope:
-      #
-      #   class MovieFetcher
-      #     after do |scope|
-      #       # do something with scope
-      #       scope.map(&:resource)
-      #     end
-      #   end
-      #
-      # When two arguments given, they are treated as scope and params. So the lambda must
-      # return tuple:
       #
       #   class MovieFetcher
       #     after do |scope, params|
@@ -232,18 +220,6 @@ module Might
       end
 
       # Add middleware to the beginning of middleware chane
-      # When only one argument given, it is treated as scope. So the lambda must
-      # return modified scope:
-      #
-      #   class MovieFetcher
-      #     before do |scope|
-      #       # do something with scope
-      #       scope.map(&:resource)
-      #     end
-      #   end
-      #
-      # When two arguments given, they are treated as scope and params. So the lambda must
-      # return tuple:
       #
       #   class MovieFetcher
       #     before do |scope, params|
@@ -263,17 +239,10 @@ module Might
         middleware_changes.push lambda { |builder|
           builder.send method_name, *args, lambda { |env|
             scope, params = env
-            case block.arity
-            when 1
-              [block.call(scope), params]
-            when 2
-              block.call(scope, params).tap do |r|
-                if !r.is_a?(Array) || r.size != 2
-                  fail 'After block must return tuple of scope and params'
-                end
+            block.call(scope, params).tap do |r|
+              if !r.is_a?(Array) || r.size != 2
+                fail 'After block must return tuple of scope and params'
               end
-            else
-              fail "Wrong number of arguments (#{block.arity} for 0..2)"
             end
           }
         }
