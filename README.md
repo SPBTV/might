@@ -79,7 +79,7 @@ This container have the following api:
 * `#get` - returns fetching result if result is `Success`, raises exception if it is `Failure`
 * `#errors` - returns parameters processing errors (as array of strings) if result is `Failure`, raises exception if it is `Success`
 
-*NOTE*: `#errors` returns only errors in user input, not any exceptions.
+**NOTE**: `#errors` returns only errors in user input, and not includes exceptions thrown during fetching process.
 
 ### Configuring filters
 
