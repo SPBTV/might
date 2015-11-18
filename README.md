@@ -1,6 +1,6 @@
 # Might
 
-Mighty Fetcher utilizes the power of Ransack gem to provide models gathering api for Rails' controllers.
+Might utilizes the power of Ransack gem to provide models gathering api for Rails' controllers.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-Define a Mighty Fetcher
+Define a mighty fetcher
 
 ```ruby
 class ChannelFetcher < Might::Fetcher
