@@ -28,7 +28,7 @@ RSpec.describe MightyFetcher::Base do
       it 'yields with processed collection' do
         expect do |b|
           fetcher.call(&b)
-        end.to yield_with_args(processed_collection)
+        end.to yield_with_args(be_success.and have_attributes(get: processed_collection))
       end
     end
 
@@ -36,7 +36,8 @@ RSpec.describe MightyFetcher::Base do
       subject { fetcher.call }
 
       it 'returns processed collection' do
-        is_expected.to eq(processed_collection)
+        is_expected.to be_success
+        is_expected.to have_attributes(get: processed_collection)
       end
     end
   end
@@ -67,7 +68,10 @@ RSpec.describe MightyFetcher::Base do
         },
         sort: '-name'
       }
-      pages = another_page_fetcher.new(params).call.map(&:name)
+      result = another_page_fetcher.new(params).call
+      expect(result).to be_success
+
+      pages = result.get.map(&:name)
 
       expect(pages).to eq(['Page #2', 'Page #0'])
     end

@@ -1,9 +1,8 @@
-require 'active_support/core_ext/module/delegation'
 require 'mighty_fetcher/filter_middleware'
 require 'mighty_fetcher/sort_middleware'
+require 'mighty_fetcher/result'
 require 'uber/inheritable_attr'
 require 'middleware'
-require 'active_support/core_ext/class/attribute'
 
 #
 module MightyFetcher
@@ -63,26 +62,34 @@ module MightyFetcher
       @params = params
     end
 
-    # @return [ActiveRecord::Relation] filtered and sorted collection
-    # @yieldparam collection [ActiveRecord::Relation] if a block given
+    # @return [ActiveRecord::Result] filtered and sorted collection
+    # @yieldparam collection [Result] if a block given
     #
     # @example
-    #   PagesFetcher.new(params).call #=> ActiveRecord::Relation
+    #   PagesFetcher.new(params).call #=> Result
     #
     # @example block syntax
-    #   PagesFetcher.new(params) do |collection|
-    #     ...
+    #   PagesFetcher.new(params) do |result|
+    #     if result.success?
+    #       result.get
+    #     else
+    #       result.errors
+    #     end
     #   end
     #
     def call
       processed_params, errors = process_params(params)
-
-      processed_collection, = middleware.call([collection, processed_params])
+      result = if errors.any?
+                 Failure.new(errors)
+               else
+                 processed_collection, = middleware.call([collection, processed_params])
+                 Success.new(processed_collection)
+               end
 
       if block_given?
-        yield processed_collection
+        yield result
       else
-        processed_collection
+        result
       end
     end
 

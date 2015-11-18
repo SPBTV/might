@@ -31,7 +31,8 @@ RSpec.describe MightyFetcher::Base, 'middleware stack builder' do
         end
 
         it 'it may be filtered' do
-          is_expected.to contain_exactly(page)
+          is_expected.to be_success
+          is_expected.to have_attributes(get: contain_exactly(page))
         end
       end
 
@@ -49,7 +50,8 @@ RSpec.describe MightyFetcher::Base, 'middleware stack builder' do
         end
 
         it 'it may be filtered' do
-          is_expected.to contain_exactly(page)
+          is_expected.to be_success
+          is_expected.to have_attributes(get: contain_exactly(page))
         end
       end
     end

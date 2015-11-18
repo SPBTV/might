@@ -42,7 +42,7 @@ end
 And fetch resources by user input:
 
 ```ruby
-ChannelFetcher.run(
+params = {
   'filter' => {
     'genres_name_in' => 'Horror,Drama',
   },
@@ -50,9 +50,19 @@ ChannelFetcher.run(
   'page' => {
     'limit' => 50,
     'offset' => 0
-  },
-  'search' => 'Hot'
-)
+  }
+}
+ChannelFetcher.run(params) do |result|
+  if result.success?
+    render json: result.get
+  else
+    render json: result.errors, status: :bad_request
+  end
+end
+
+# or
+
+ChannelFetcher.run(params) #=> ChannelFetcher::Result
 ```
 
 `params` hash should follow the following conventions:
@@ -60,6 +70,16 @@ ChannelFetcher.run(
 * `:filter` key is used for filtering
 * `:sort` key is used for sorting
 * `:page` key is used for pagination
+
+The result of evaluating `#run` method is `MightyFetcher::Result`. It may be either success or failure.
+This container have the following api:
+
+* `#success?` - `true` if result is `Success`, false otherwise
+* `#failure?` - `true` if result is `Failure`, false otherwise
+* `#get` - returns fetching result if result is `Success`, raises exception if it is `Failure`
+* `#errors` - returns parameters processing errors (as array of strings) if result is `Failure`, raises exception if it is `Success`
+
+*NOTE*: `#errors` returns only errors in user input, not any exceptions.
 
 ### Configuring filters
 
