@@ -7,7 +7,7 @@ module Might
     DIRECTIONS = %w(asc desc).freeze
     REVERSED_DIRECTIONS = {
       'asc' => 'desc',
-      'desc' => 'asc',
+      'desc' => 'asc'
     }.freeze
 
     attr_reader :direction

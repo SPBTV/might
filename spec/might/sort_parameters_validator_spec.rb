@@ -6,14 +6,14 @@ require 'might/sort_undefined_parameter'
 RSpec.describe Might::SortParametersValidator do
   before :all do
     I18n.backend.store_translations(:en,
-      activemodel: {
-        errors: {
-          messages: {
-            undefined_sort_order: 'is not allowed sort order'
-          }
-        }
-      }
-    )
+                                    activemodel: {
+                                      errors: {
+                                        messages: {
+                                          undefined_sort_order: 'is not allowed sort order'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   let(:errors) { ['The error'] }

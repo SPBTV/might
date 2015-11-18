@@ -1,7 +1,7 @@
 require 'might/fetcher'
 
 RSpec.describe Might::Fetcher, 'middleware stack builder' do
-  require_relative 'inserted middleware_examples'
+  require_relative 'inserted_middleware_examples'
   include_examples 'inserted middleware', :after
   include_examples 'inserted middleware', :before
 

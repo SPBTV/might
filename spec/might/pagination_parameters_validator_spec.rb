@@ -4,20 +4,20 @@ RSpec.describe Might::PaginationParametersValidator do
   let(:errors) { ['The error'] }
   let(:validator) do
     app = ->(env) { env }
-    described_class.new(app, )
+    described_class.new(app)
   end
 
   before :all do
     I18n.backend.store_translations(:en,
-      activemodel: {
-        errors: {
-          messages: {
-            invalid_page_type: 'is invalid',
-            not_a_number: 'is not a number'
-          }
-        }
-      }
-    )
+                                    activemodel: {
+                                      errors: {
+                                        messages: {
+                                          invalid_page_type: 'is invalid',
+                                          not_a_number: 'is not a number'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   before do

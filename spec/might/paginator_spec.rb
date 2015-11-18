@@ -23,7 +23,7 @@ RSpec.describe Might::Paginator do
         limit: 2,
         offset: 4,
         count: 1,
-        total: 5,
+        total: 5
       )
     end
   end

@@ -53,7 +53,7 @@ module Might
     def default_pagination_options
       {
         limit: @per_page,
-        offset: 0,
+        offset: 0
       }.with_indifferent_access
     end
   end

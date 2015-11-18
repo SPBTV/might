@@ -1,4 +1,5 @@
 module Might
+  #
   class RansackableFilter
     # @param app [#call]
     def initialize(app)

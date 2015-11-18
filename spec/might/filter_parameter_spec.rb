@@ -4,14 +4,14 @@ require 'might/filter_parameter_definition'
 RSpec.describe Might::FilterParameter do
   before :all do
     I18n.backend.store_translations(:en,
-      errors: {
-        attributes: {
-          resource_type: {
-            inclusion: 'is not included in the list'
-          }
-        }
-      }
-    )
+                                    errors: {
+                                      attributes: {
+                                        resource_type: {
+                                          inclusion: 'is not included in the list'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   context '#provided?' do

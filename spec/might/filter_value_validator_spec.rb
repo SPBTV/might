@@ -5,14 +5,14 @@ require 'might/filter_parameter_definition'
 RSpec.describe Might::FilterValueValidator do
   before :all do
     I18n.backend.store_translations(:en,
-      activemodel: {
-        errors: {
-          messages: {
-            undefined_filter: 'is not allowed filter name'
-          }
-        }
-      }
-    )
+                                    activemodel: {
+                                      errors: {
+                                        messages: {
+                                          undefined_filter: 'is not allowed filter name'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   context '.build' do

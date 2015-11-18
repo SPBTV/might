@@ -82,7 +82,7 @@ RSpec.describe Might::FilterParametersExtractor do
       let(:aliased) { :title }
       let(:predicate) { 'eq' }
       let(:parameter_definition) { Might::FilterParameterDefinition.new(name, as: aliased) }
-      let(:params) {  { filter: {"#{aliased}_#{predicate}" => 'foo'} } }
+      let(:params) { { filter: { "#{aliased}_#{predicate}" => 'foo' } } }
 
       subject do
         extract(parameter_definition, params)

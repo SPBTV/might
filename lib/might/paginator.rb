@@ -51,7 +51,7 @@ module Might
         limit: limit,
         offset: offset,
         count: paginated_collection.count(:all),
-        total: collection.count(:all),
+        total: collection.count(:all)
       }
     end
   end

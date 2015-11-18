@@ -26,8 +26,8 @@ RSpec.describe Might::PaginationMiddleware do
       {
         'page' => {
           'limit' => 2,
-          'offset' => 4,
-        },
+          'offset' => 4
+        }
       }.with_indifferent_access
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Might::PaginationMiddleware do
     it 'use default options' do
       expect(@processed_scopes.pagination).to include(
         limit: 3,
-        offset: 0,
+        offset: 0
       )
     end
   end
@@ -59,15 +59,15 @@ RSpec.describe Might::PaginationMiddleware do
     let(:params) do
       {
         'page' => {
-          'limit' => 200,
-        },
+          'limit' => 200
+        }
       }.with_indifferent_access
     end
 
     it 'override limit with max_per_page value' do
       expect(@processed_scopes.pagination).to include(
         limit: 4,
-        offset: 0,
+        offset: 0
       )
     end
   end

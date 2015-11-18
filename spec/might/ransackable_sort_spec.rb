@@ -9,7 +9,7 @@ RSpec.describe Might::RansackableSort, database: true do
   end
 
   it 'sort using ransack' do
-    scope, _ = call_middleware(sort: ['name asc'])
+    scope, = call_middleware(sort: ['name asc'])
     expect(scope.map(&:name)).to eq(['Page #0', 'Page #1', 'Page #2'])
   end
 end

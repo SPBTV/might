@@ -10,7 +10,7 @@ module Might
       scope, params = env
 
       ransackable_parameters = Array(params[:filter]).reject { |f| f.predicate.nil? }
-                                 .each_with_object({}) do |filter, ransackable_filters|
+                               .each_with_object({}) do |filter, ransackable_filters|
         ransackable_filters[canonical_name_for(filter)] = filter.value
       end
 
@@ -52,8 +52,8 @@ module Might
       polymorphic_name = filter.on.keys.first
 
       name = Array(filter.on.values.first)
-               .map { |polymorphic_type| "#{polymorphic_name}_of_#{polymorphic_type}_type_#{filter.name}" }
-               .join('_or_')
+             .map { |polymorphic_type| "#{polymorphic_name}_of_#{polymorphic_type}_type_#{filter.name}" }
+             .join('_or_')
 
       "#{name}_#{filter.predicate}"
     end

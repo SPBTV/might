@@ -13,7 +13,7 @@ module Might
     end
 
     def call(env)
-      scope, _ = ::Middleware::Builder.new do |b|
+      scope, = ::Middleware::Builder.new do |b|
         b.use RansackableFilterParametersAdapter
         b.use RansackableFilter
       end.call(env)

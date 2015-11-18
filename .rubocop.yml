@@ -1,3 +1,19 @@
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 120
+
+Metrics/AbcSize:
+  Severity: refactor
+
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Severity: refactor
+
+Style/AccessorMethodName:
+  Exclude:
+    - 'lib/might/result.rb'
+#
+# Configuration parameters: Exclude.
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*.rb'

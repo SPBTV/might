@@ -6,7 +6,7 @@ ActiveRecord::Base.establish_connection(
   pool: 5,
   timeout: 5000,
   database: ':memory:',
-  verbosity: :quiet,
+  verbosity: :quiet
 )
 
 module Schema

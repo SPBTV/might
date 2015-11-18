@@ -10,14 +10,14 @@ RSpec.describe Might::FilterParametersValidator do
 
   before :all do
     I18n.backend.store_translations(:en,
-      activemodel: {
-        errors: {
-          messages: {
-            blank: 'should not be blank'
-          }
-        }
-      }
-    )
+                                    activemodel: {
+                                      errors: {
+                                        messages: {
+                                          blank: 'should not be blank'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   context 'when some filter is required' do

@@ -19,6 +19,7 @@ RSpec.shared_examples 'inserted middleware' do |modification|
     end
 
     subject(:fetch!) do
+      # rubocop:disable Style/MultilineBlockChain
       Class.new(described_class) do
         def default_middleware
           ::Middleware::Builder.new
@@ -27,12 +28,12 @@ RSpec.shared_examples 'inserted middleware' do |modification|
         def process_params(params)
           [params, []]
         end
-
       end.tap do |klass|
         klass.resource_class = double('resource_class', all: collection)
         klass.send(modification, &test_probe)
         klass.middleware(&inspector)
       end.new(params).call
+      # rubocop:enable Style/MultilineBlockChain
     end
 
     context 'when block returns tuple' do

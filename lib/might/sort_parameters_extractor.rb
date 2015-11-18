@@ -60,4 +60,3 @@ module Might
     end
   end
 end
-

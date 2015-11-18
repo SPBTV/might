@@ -20,7 +20,7 @@ module Might
     # Second argument is a request parameters provided by user
     #
     def call(env)
-      scope, _ = ::Middleware::Builder.new do |b|
+      scope, = ::Middleware::Builder.new do |b|
         b.use RansackableSortParametersAdapter
         b.use RansackableSort
       end.call(env)

@@ -5,14 +5,14 @@ require 'might/sort_parameter_definition'
 RSpec.describe Might::SortValueValidator do
   before :all do
     I18n.backend.store_translations(:en,
-      activemodel: {
-        errors: {
-          messages: {
-            undefined_sort_order: 'is not allowed sort order'
-          }
-        }
-      }
-    )
+                                    activemodel: {
+                                      errors: {
+                                        messages: {
+                                          undefined_sort_order: 'is not allowed sort order'
+                                        }
+                                      }
+                                    }
+                                   )
   end
 
   subject { definition.validator.tap(&:validate) }

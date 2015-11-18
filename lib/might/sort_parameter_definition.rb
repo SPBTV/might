@@ -37,9 +37,7 @@ module Might
         other.as == as
     end
 
-    def reverse_direction?
-      @reverse_direction
-    end
+    alias_method :reverse_direction?, :reverse_direction
 
     def validator
       SortValueValidator.build(self).new
