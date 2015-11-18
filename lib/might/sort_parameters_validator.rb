@@ -1,5 +1,3 @@
-require 'might/validation_error'
-
 module Might
   # Validates sortings and raises error if one of them is invalid
   #

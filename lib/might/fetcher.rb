@@ -1,5 +1,13 @@
+require 'might/sort_parameters_extractor'
+require 'might/sort_parameters_validator'
+require 'might/filter_parameters_extractor'
+require 'might/filter_parameters_validator'
+require 'might/pagination_parameters_validator'
+
 require 'might/filter_middleware'
 require 'might/sort_middleware'
+require 'might/pagination_middleware'
+
 require 'might/result'
 require 'uber/inheritable_attr'
 require 'middleware'
@@ -106,6 +114,7 @@ module Might
       Middleware::Builder.new do |b|
         b.use FilterMiddleware
         b.use SortMiddleware
+        b.use PaginationMiddleware
       end
     end
 
@@ -127,6 +136,7 @@ module Might
         b.use FilterParametersValidator
         b.use SortParametersExtractor, self.class.sort_parameters_definition
         b.use SortParametersValidator
+        b.use PaginationParametersValidator
       end.call([params, []])
     end
 

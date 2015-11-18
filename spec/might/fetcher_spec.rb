@@ -66,14 +66,18 @@ RSpec.describe Might::Fetcher do
           'name_not_eq' => 'Page #1',
           'slug_not_eq' => ''
         },
-        sort: '-name'
+        sort: '-name',
+        page: {
+          limit: 1,
+          offset: 1
+        }
       }
       result = another_page_fetcher.new(params).call
       expect(result).to be_success
 
       pages = result.get.map(&:name)
 
-      expect(pages).to eq(['Page #2', 'Page #0'])
+      expect(pages).to eq(['Page #0'])
     end
   end
 end

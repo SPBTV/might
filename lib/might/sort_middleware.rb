@@ -1,7 +1,5 @@
-require 'might/validation_error'
 require 'might/ransackable_sort_parameters_adapter'
 require 'might/ransackable_sort'
-require 'might/sort_parameters_validator'
 require 'might/sort_parameters_extractor'
 require 'middleware'
 

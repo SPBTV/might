@@ -1,7 +1,6 @@
 require 'might/filter_middleware'
 require 'might/filter_parameter'
 require 'might/filter_parameter_definition'
-require 'might/validation_error'
 require 'set'
 require 'database_helper'
 
