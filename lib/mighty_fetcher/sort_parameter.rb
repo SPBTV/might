@@ -23,10 +23,11 @@ module MightyFetcher
       @direction = direction.to_s
       fail ArgumentError unless DIRECTIONS.include?(@direction)
       @definition = definition
+      @validator = definition.validator
     end
 
+    attr_reader :validator
     delegate :name, to: :definition
-    delegate :validator, to: :definition
     delegate :valid?, to: :validator
     delegate :invalid?, to: :validator
 

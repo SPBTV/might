@@ -9,18 +9,16 @@ module MightyFetcher
       @app = app
     end
 
-    # @param env [<{:filter => Set<MightyFetcher::FilterParameterm, []>}]
-    # @return [<{:filter => Set<MightyFetcher::FilterParameter, []>}]
-    # @raise MightyFetcher::FilterValidationFailed
+    # @param env [<{:filter => <MightyFetcher::FilterParameter>, Array>}]
+    # @return [<{:filter => <MightyFetcher::FilterParameter>, Array>}]
     #
     def call(env)
       params, errors = env
-      invalid_filters = Array(params[:filter]).select(&:invalid?)
 
-      if invalid_filters.any?
-        fail MightyFetcher::FilterValidationFailed, invalid_filters.map(&:errors)
-      end
-      app.call([params, errors])
+      invalid_filters = Array(params[:filter]).select(&:invalid?)
+      messages = invalid_filters.flat_map(&:errors)
+
+      app.call([params, errors.concat(messages)])
     end
 
     private

@@ -9,20 +9,16 @@ module MightyFetcher
       @app = app
     end
 
-    # @param env [<Set<MightyFetcher::RansackableSort::SortParameter, []>]
-    # @return [<Set<MightyFetcher::RansackableSort::SortParameter, []>]
-    # @raise MightyFetcher::SortOrderValidationFailed
+    # @param env [<{:sort => MightyFetcher::FilterParameter}, Array>]
+    # @return [<{:sort => MightyFetcher::FilterParameter}, Array>]
     #
     def call(env)
       params, errors = env
 
       not_allowed_parameters = Array(params[:sort]).select(&:invalid?)
+      messages = not_allowed_parameters.flat_map(&:errors)
 
-      if not_allowed_parameters.any?
-        fail MightyFetcher::SortOrderValidationFailed, not_allowed_parameters.map(&:errors)
-      end
-
-      app.call([params, errors])
+      app.call([params, errors.concat(messages)])
     end
 
     private

@@ -75,7 +75,7 @@ module MightyFetcher
     #   end
     #
     def call
-      processed_params, _ = process_params(params)
+      processed_params, errors = process_params(params)
 
       processed_collection, = middleware.call([collection, processed_params])
 
@@ -120,7 +120,7 @@ module MightyFetcher
         b.use FilterParametersValidator
         b.use SortParametersExtractor, self.class.sort_parameters_definition
         b.use SortParametersValidator
-      end.call([params, nil])
+      end.call([params, []])
     end
 
     class << self

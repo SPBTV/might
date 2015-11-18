@@ -17,6 +17,4 @@ module MightyFetcher
   end
 
   PaginationValidationFailed = Class.new(ValidationError)
-  FilterValidationFailed = Class.new(ValidationError)
-  SortOrderValidationFailed = Class.new(ValidationError)
 end
