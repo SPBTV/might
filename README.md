@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/SPBTV/might.svg)](https://travis-ci.org/SPBTV/might)
+[![Code Climate](https://codeclimate.com/github/SPBTV/might/badges/gpa.svg)](https://codeclimate.com/github/SPBTV/might)
+[![Test Coverage](https://codeclimate.com/github/SPBTV/might/badges/coverage.svg)](https://codeclimate.com/github/SPBTV/might/coverage)
+[![Gem Version](https://badge.fury.io/rb/might.svg)](https://badge.fury.io/rb/might)
+
 # Might
 
 Might utilizes the power of Ransack gem to provide models gathering api for Rails' controllers.
