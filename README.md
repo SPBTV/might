@@ -33,9 +33,6 @@ class ChannelFetcher < Might::Fetcher
   # Allowed sortings
   sort :name
   sort :created_at
-
-  # Allow to search on model using Postgres Search
-  search
 end
 ```
 
