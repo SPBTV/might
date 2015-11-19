@@ -10,5 +10,5 @@ matrix:
   fast_finish: true
 before_install: gem install bundler -v 1.10.6
 script:
-  - bundle exec rake
+  - bundle exec rake spec
   - bundle exec rubocop --fail-level C
