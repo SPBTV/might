@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'might/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'sbptv_might'
+  spec.name          = 'might'
   spec.version       = Might::VERSION
   spec.authors       = ['Tema Bolshakov']
   spec.email         = ['abolshakov@spbtv.com']
