@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Mighty resource fetchers'
   spec.description   = 'Mighty resource fetchers build on top of Ransack gem'
   spec.homepage      = 'https://github.com/SPBTV/might'
+  spec.license       = 'Apache 2.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
