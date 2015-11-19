@@ -278,7 +278,7 @@ end
 To get translated error messages load Rails Railtie
 
 ```ruby
-require 'might/railtie
+require 'might/railtie'
 ```
 
 ## Development
