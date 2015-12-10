@@ -22,7 +22,7 @@ module Might
     #
     def call(env)
       scope, params = env
-      # validate_parameters!(params)
+
       paginated_scope = @paginator_class.new(pagination_options(params)).paginate(scope)
       app.call([paginated_scope, params])
     end
@@ -30,11 +30,6 @@ module Might
     private
 
     attr_reader :app
-
-    # def validate_parameters!(params)
-    #   validator = Validator.new(params[:page])
-    #   fail(PaginationValidationFailed, validator.errors) unless validator.valid?
-    # end
 
     # @param [Hash] params
     # @option params [Hash] (nil) :limit
