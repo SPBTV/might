@@ -25,7 +25,7 @@ module Might
     NOT_NULL = 'not_null'
     NULL = 'null'
     NOT_IN = 'not_in'
-    IN  = 'in'
+    IN = 'in'
     NOT_CONT_ANY = 'not_cont_any'
     CONT_ANY = 'cont_any'
 
