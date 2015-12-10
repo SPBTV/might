@@ -9,10 +9,11 @@ module Might
     # @param max_per_page [Integer]
     # @param per_page [Integer]
     #
-    def initialize(app, max_per_page: false, per_page: 50)
+    def initialize(app, max_per_page: false, per_page: 50, paginator_class: Paginator)
       @app = app
       @max_per_page = max_per_page
       @per_page = per_page
+      @paginator_class = paginator_class
     end
 
     # @param [Array(ActiveRecord::Relation, Hash)] env
@@ -22,7 +23,7 @@ module Might
     def call(env)
       scope, params = env
       # validate_parameters!(params)
-      paginated_scope = Paginator.new(pagination_options(params)).paginate(scope)
+      paginated_scope = @paginator_class.new(pagination_options(params)).paginate(scope)
       app.call([paginated_scope, params])
     end
 
