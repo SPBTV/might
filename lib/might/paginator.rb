@@ -33,26 +33,7 @@ module Might
     # @return [ActiveRecord::CollectionProxy]
     #
     def paginate(collection)
-      paginated_collection = collection.offset(offset).limit(limit)
-
-      pagination_hash = pagination(collection, paginated_collection)
-
-      paginated_collection.define_singleton_method(:pagination) do
-        pagination_hash
-      end
-
-      paginated_collection
-    end
-
-    private
-
-    def pagination(collection, paginated_collection)
-      {
-        limit: limit,
-        offset: offset,
-        count: paginated_collection.count(:all),
-        total: collection.count(:all)
-      }
+      collection.offset(offset).limit(limit)
     end
   end
 end
