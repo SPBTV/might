@@ -17,15 +17,6 @@ RSpec.describe Might::Paginator do
     it 'contains requested elements' do
       expect(paginated.pluck(:name)).to eq(['4'])
     end
-
-    it 'set #pagination for collection' do
-      expect(paginated.pagination).to include(
-        limit: 2,
-        offset: 4,
-        count: 1,
-        total: 5
-      )
-    end
   end
 
   context 'invalid limit and offset' do
