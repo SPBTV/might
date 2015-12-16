@@ -1,11 +1,11 @@
 require 'might/filter_middleware'
 require 'might/filter_parameter'
 require 'might/filter_parameter_definition'
-require 'set'
+require 'might/filter_parameters'
 require 'database_helper'
 
 RSpec.describe Might::FilterMiddleware, database: true do
-  let(:params) { { filter: Set.new([parameter]) } }
+  let(:params) { { filter: Might::FilterParameters.new([parameter]) } }
   let(:page) { Page.first }
   let(:parameter) { Might::FilterParameter.new(page.name, 'eq', definition) }
   let(:definition) do

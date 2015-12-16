@@ -3,13 +3,14 @@ require 'might/filter_parameters_extractor'
 require 'might/filter_predicates'
 require 'might/filter_parameter_definition'
 require 'might/filter_parameter'
+require 'might/filter_parameters'
 
 RSpec.describe Might::FilterParametersExtractor do
   context '#call' do
     # @param parameters_definition [Might::FilterParameterDefinition]
     def extractor(parameters_definition)
       app = ->(env) { env[0] }
-      described_class.new(app, Set.new([parameters_definition]))
+      described_class.new(app, Might::FilterParameters.new([parameters_definition]))
     end
 
     def extract(parameter_definition, params)

@@ -1,3 +1,4 @@
+require 'might/filter_parameters'
 require 'might/sort_parameters_extractor'
 require 'might/sort_parameters_validator'
 require 'might/filter_parameters_extractor'
@@ -58,7 +59,7 @@ module Might
     inheritable_attr :sort_parameters_definition
     inheritable_attr :middleware_changes
 
-    self.filter_parameters_definition = Set.new
+    self.filter_parameters_definition = FilterParameters.new
     self.sort_parameters_definition = Set.new
     self.middleware_changes = []
 

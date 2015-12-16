@@ -1,6 +1,7 @@
 require 'set'
 require 'might/fetcher'
 require 'might/filter_parameter_definition'
+require 'might/filter_parameters'
 
 RSpec.describe Might::Fetcher, 'Filter DSL' do
   describe '.filter' do
@@ -9,7 +10,7 @@ RSpec.describe Might::Fetcher, 'Filter DSL' do
     end
 
     before do
-      fetcher_class.filter_parameters_definition = Set.new
+      fetcher_class.filter_parameters_definition = Might::FilterParameters.new
     end
 
     subject { fetcher_class.filter_parameters_definition }
