@@ -48,4 +48,18 @@ RSpec.describe Might::FilterParameters do
       end
     end
   end
+
+  describe '#map' do
+    let(:filters) { Might::FilterParameters.new([1, 2]) }
+    subject(:mapped) { filters.map { |v| v * 2 } }
+
+    it 'returns another object of the same type' do
+      is_expected.to be_kind_of(Might::FilterParameters)
+      is_expected.not_to equal(filters)
+    end
+
+    it 'maps values inside container' do
+      is_expected.to eq(Might::FilterParameters.new([2, 4]))
+    end
+  end
 end
