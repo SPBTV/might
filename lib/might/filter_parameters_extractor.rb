@@ -1,6 +1,7 @@
 require_relative 'filter_predicates'
 require_relative 'filter_undefined_parameter'
 require_relative 'filter_parameter'
+require_relative 'filter_parameters'
 
 module Might
   # User provided filters syntax:
@@ -29,7 +30,7 @@ module Might
     def call(env)
       params, errors = env
 
-      provided_parameters = Hash(params[:filter]).each_with_object([]) do |(name, value), parameters|
+      provided_parameters = Hash(params[:filter]).each_with_object(FilterParameters.new) do |(name, value), parameters|
         type_casted_value = type_cast_value(name, value)
         parameters << extract_parameter(name, type_casted_value)
       end

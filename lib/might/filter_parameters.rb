@@ -25,5 +25,9 @@ module Might
         fail FilterError, "filter not found: #{name.inspect}"
       end
     end
+
+    def map(&block)
+      dup.map!(&block)
+    end
   end
 end
