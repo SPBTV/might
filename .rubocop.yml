@@ -1,13 +1,5 @@
-# Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
-  Max: 120
-
-Metrics/AbcSize:
-  Severity: refactor
-
-# Configuration parameters: CountComments.
-Metrics/MethodLength:
-  Severity: refactor
+inherit_gem:
+  spbtv_code_style: .rubocop.yml
 
 Style/AccessorMethodName:
   Exclude:
