@@ -21,7 +21,7 @@ RSpec.shared_examples 'inserted middleware' do |modification|
     subject(:fetch!) do
       # rubocop:disable Style/MultilineBlockChain
       Class.new(described_class) do
-        def default_middleware
+        def fetch_middleware
           ::Middleware::Builder.new
         end
 
