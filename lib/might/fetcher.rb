@@ -51,7 +51,7 @@ module Might
   #
   #     sort :position, as: :relevance, reverse_direction: true
   #
-  class Fetcher
+  class Fetcher # rubocop:disable Metrics/ClassLength
     extend Uber::InheritableAttr
 
     inheritable_attr :resource_class
@@ -71,7 +71,7 @@ module Might
       @params = params
     end
 
-    # @return [ActiveRecord::Result] filtered and sorted collection
+    # @return [Might::Result] filtered and sorted collection
     # @yieldparam collection [Result] if a block given
     #
     # @example
@@ -91,8 +91,7 @@ module Might
       result = if errors.any?
                  Failure.new(errors)
                else
-                 processed_collection, = middleware.call([self.class.resource_class, processed_params])
-                 Success.new(processed_collection)
+                 Success.new(fetch(processed_params))
                end
 
       if block_given?
@@ -104,9 +103,38 @@ module Might
 
     private
 
+    # @param parsed_params [Hash]
+    # @return [ActiveRecord::Relation]
+    # @api public
+    # This method may be overridden to implement integration with library other than Ransack
+    #
+    def fetch(parsed_params)
+      collection, = middleware.call([self.class.resource_class, parsed_params])
+      collection
+    end
+
+    # @return [Hash, Array] tuple of parameters and processing errors
+    #   this errors may be shown to front-end developer
+    # @api public
+    def process_params(params)
+      process_params_middleware.call([params, []])
+    end
+
+    # Library params processing middleware stack
+    # @return [Middleware::Builder]
+    def process_params_middleware
+      Middleware::Builder.new do |b|
+        b.use FilterParametersExtractor, self.class.filter_parameters_definition
+        b.use FilterParametersValidator
+        b.use SortParametersExtractor, self.class.sort_parameters_definition
+        b.use SortParametersValidator
+        b.use PaginationParametersValidator
+      end
+    end
+
     # Library middleware stack
     # @return [Middleware::Builder]
-    def default_middleware
+    def fetch_middleware
       Middleware::Builder.new do |b|
         b.use FilterMiddleware
         b.use SortMiddleware
@@ -117,23 +145,11 @@ module Might
     # User modified middleware stack
     # @return [Middleware::Builder]
     def middleware
-      default_middleware.tap do |builder|
+      fetch_middleware.tap do |builder|
         self.class.middleware_changes.each do |change|
           builder.instance_eval(&change)
         end
       end
-    end
-
-    # @return [Hash, Array] tuple of parameters and processing errors
-    #   this errors may be shown to front-end developer
-    def process_params(params)
-      Middleware::Builder.new do |b|
-        b.use FilterParametersExtractor, self.class.filter_parameters_definition
-        b.use FilterParametersValidator
-        b.use SortParametersExtractor, self.class.sort_parameters_definition
-        b.use SortParametersValidator
-        b.use PaginationParametersValidator
-      end.call([params, []])
     end
 
     class << self
@@ -234,8 +250,7 @@ module Might
         fail ArgumentError unless block_given?
         middleware_changes.push lambda { |builder|
           builder.send method_name, *args, lambda { |env|
-            scope, params = env
-            block.call(scope, params).tap do |r|
+            block.call(*env).tap do |r|
               if !r.is_a?(Array) || r.size != 2
                 fail 'After block must return tuple of scope and params'
               end

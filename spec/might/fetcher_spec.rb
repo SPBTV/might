@@ -12,7 +12,7 @@ RSpec.describe Might::Fetcher do
 
       Class.new(described_class) do
         self.resource_class = klass
-        define_method :default_middleware do
+        define_method :fetch_middleware do
           ::Middleware::Builder.new do |b|
             b.use ->(_) { processed_collection }
           end
