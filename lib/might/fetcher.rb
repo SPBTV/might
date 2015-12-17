@@ -91,7 +91,7 @@ module Might
       result = if errors.any?
                  Failure.new(errors)
                else
-                 processed_collection, = middleware.call([collection, processed_params])
+                 processed_collection, = middleware.call([self.class.resource_class, processed_params])
                  Success.new(processed_collection)
                end
 
@@ -103,11 +103,6 @@ module Might
     end
 
     private
-
-    # @return [ActiveRecord::Relation]
-    def collection
-      self.class.resource_class.all
-    end
 
     # Library middleware stack
     # @return [Middleware::Builder]
