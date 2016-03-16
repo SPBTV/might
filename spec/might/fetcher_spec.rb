@@ -28,7 +28,7 @@ RSpec.describe Might::Fetcher do
       it 'yields with processed collection' do
         expect do |b|
           fetcher.call(&b)
-        end.to yield_with_args(be_success.and have_attributes(get: processed_collection))
+        end.to yield_with_args(be_success.and(have_attributes(get: processed_collection)))
       end
     end
 

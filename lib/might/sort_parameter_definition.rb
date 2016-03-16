@@ -37,7 +37,7 @@ module Might
         other.as == as
     end
 
-    alias_method :reverse_direction?, :reverse_direction
+    alias reverse_direction? reverse_direction
 
     def validator
       SortValueValidator.build(self).new
@@ -48,7 +48,7 @@ module Might
     end
 
     def undefined?
-      !self.defined?
+      !self.defined? # rubocop:disable Style/RedundantSelf
     end
   end
 end

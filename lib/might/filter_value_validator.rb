@@ -30,11 +30,11 @@ module Might
         include ActiveModel::Validations
 
         validates(definition.as, definition.validations) if definition.validations.present?
-        validates(definition.as, 'might/filter_value_validator/defined': true)
+        validates(definition.as, :'might/filter_value_validator/defined' => true)
 
         define_method(:undefined?) { definition.undefined? }
 
-        def self.model_name
+        define_singleton_method :model_name do
           ActiveModel::Name.new(Might, nil, 'Might')
         end
       end

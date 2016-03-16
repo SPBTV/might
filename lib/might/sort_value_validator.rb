@@ -29,7 +29,7 @@ module Might
       Class.new do
         include ActiveModel::Validations
 
-        validates(definition.name, 'might/sort_value_validator/defined': true)
+        validates(definition.name, :'might/sort_value_validator/defined' => true)
 
         define_method(:undefined?) { definition.undefined? }
         define_method(definition.name) {}
