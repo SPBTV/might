@@ -246,11 +246,11 @@ module Might
 
       private
 
-      def alter_middleware(method_name, *args, &block)
+      def alter_middleware(method_name, *args)
         fail ArgumentError unless block_given?
         middleware_changes.push lambda { |builder|
           builder.send method_name, *args, lambda { |env|
-            block.call(*env).tap do |r|
+            yield(*env).tap do |r|
               if !r.is_a?(Array) || r.size != 2
                 fail 'After block must return tuple of scope and params'
               end

@@ -2,32 +2,32 @@ module Might
   # Contains contains with all supported predicates
   #
   module FilterPredicates
-    NOT_EQ = 'not_eq'
-    EQ = 'eq'
-    DOES_NOT_MATCH = 'does_not_match'
-    MATCHES = 'matches'
-    GT = 'gt'
-    LT = 'lt'
-    GTEQ = 'gteq'
-    LTEQ = 'lteq'
-    NOT_CONT = 'not_cont'
-    CONT = 'cont'
-    NOT_START = 'not_start'
-    START = 'start'
-    DOES_NOT_END = 'not_end'
-    ENDS = 'end'
-    NOT_TRUE = 'not_true'
-    TRUE = 'true'
-    NOT_FALSE = 'not_false'
-    FALSE = 'false'
-    BLANK = 'blank'
-    PRESENT = 'present'
-    NOT_NULL = 'not_null'
-    NULL = 'null'
-    NOT_IN = 'not_in'
-    IN = 'in'
-    NOT_CONT_ANY = 'not_cont_any'
-    CONT_ANY = 'cont_any'
+    NOT_EQ = 'not_eq'.freeze
+    EQ = 'eq'.freeze
+    DOES_NOT_MATCH = 'does_not_match'.freeze
+    MATCHES = 'matches'.freeze
+    GT = 'gt'.freeze
+    LT = 'lt'.freeze
+    GTEQ = 'gteq'.freeze
+    LTEQ = 'lteq'.freeze
+    NOT_CONT = 'not_cont'.freeze
+    CONT = 'cont'.freeze
+    NOT_START = 'not_start'.freeze
+    START = 'start'.freeze
+    DOES_NOT_END = 'not_end'.freeze
+    ENDS = 'end'.freeze
+    NOT_TRUE = 'not_true'.freeze
+    TRUE = 'true'.freeze
+    NOT_FALSE = 'not_false'.freeze
+    FALSE = 'false'.freeze
+    BLANK = 'blank'.freeze
+    PRESENT = 'present'.freeze
+    NOT_NULL = 'not_null'.freeze
+    NULL = 'null'.freeze
+    NOT_IN = 'not_in'.freeze
+    IN = 'in'.freeze
+    NOT_CONT_ANY = 'not_cont_any'.freeze
+    CONT_ANY = 'cont_any'.freeze
 
     ON_VALUE = [
       NOT_EQ, EQ,
@@ -41,12 +41,12 @@ module Might
       NOT_FALSE, FALSE,
       BLANK, PRESENT,
       NOT_NULL, NULL
-    ]
+    ].freeze
 
     ON_ARRAY = [
       NOT_IN, IN,
       NOT_CONT_ANY, CONT_ANY
-    ]
+    ].freeze
 
     ALL = ON_VALUE + ON_ARRAY
   end
