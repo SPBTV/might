@@ -55,11 +55,11 @@ RSpec.describe Might::FilterParametersExtractor do
       end
     end
 
-    Might::FilterPredicates::ON_VALUE.each do |predicate|
+    Might::FilterPredicates.value.each do |predicate|
       include_examples 'predicate for value', predicate
     end
 
-    Might::FilterPredicates::ON_ARRAY.each do |predicate|
+    Might::FilterPredicates.array.each do |predicate|
       include_examples 'predicate for array', predicate
     end
 

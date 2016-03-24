@@ -30,7 +30,7 @@ RSpec.describe Might::FilterParameterDefinition do
       let(:options) { {} }
 
       it 'allow to use all predicates' do
-        is_expected.to contain_exactly(*Might::FilterPredicates::ALL)
+        is_expected.to contain_exactly(*Might::FilterPredicates.all)
       end
     end
 
