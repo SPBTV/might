@@ -1,6 +1,9 @@
+
+  * Implement public API for registering predicates
+
 **0.5.0**
 
-  *  Introduce Might::FilterParameters as subclass of Setq
+  *  Introduce `Might::FilterParameters` as subclass of Set
 
 **0.4.0**
 
