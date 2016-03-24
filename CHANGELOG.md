@@ -1,3 +1,4 @@
+**0.6.0**
 
   * Implement public API for registering predicates
 
