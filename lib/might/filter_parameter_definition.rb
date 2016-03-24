@@ -35,7 +35,7 @@ module Might
       @as = options.fetch(:as, name).to_s
       @name = name.to_s
       @on = options[:on]
-      @predicates = Array(options.fetch(:predicates, FilterPredicates::ALL)).map(&:to_s)
+      @predicates = Array(options.fetch(:predicates, FilterPredicates.all)).map(&:to_s)
       @coerce = options.fetch(:coerce, ->(v) { v })
       @validations = options.fetch(:validates, {})
     end

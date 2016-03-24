@@ -52,7 +52,7 @@ module Might
     attr_reader :parameters_definition, :app
 
     def name_and_predicate(name_with_predicate)
-      predicate = FilterPredicates::ALL.detect { |p| name_with_predicate.end_with?("_#{p}") }
+      predicate = FilterPredicates.all.detect { |p| name_with_predicate.end_with?("_#{p}") }
       [
         name_with_predicate.chomp("_#{predicate}"),
         predicate
@@ -69,7 +69,7 @@ module Might
     end
 
     def type_cast_value(name, value)
-      if name.end_with?(*FilterPredicates::ON_ARRAY)
+      if name.end_with?(*FilterPredicates.array)
         value.split(',')
       else
         value
