@@ -70,7 +70,7 @@ module Might
     module_function :register
 
     # Returns predicates for array
-    # @return [Set{String}]
+    # @return [Set<String>]
     #
     def array
       @predicates_on_array.dup
@@ -78,7 +78,7 @@ module Might
     module_function :array
 
     # Returns predicates for values
-    # @return [Set{String}]
+    # @return [Set<String>]
     #
     def value
       @predicates_on_value.dup
@@ -86,7 +86,7 @@ module Might
     module_function :value
 
     # Returns all predicates
-    # @return [Set{String}]
+    # @return [Set<String>]
     #
     def all
       @predicates_on_value + @predicates_on_array

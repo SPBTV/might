@@ -219,6 +219,18 @@ Predicate      | Opposite Predicate | Meaning
 `present`      | `blank`            | field is present (not null and not a blank string)
 `null`         | `not_null`         | field is null
 
+You may want to implement custom predicate. First of all you should implement predicate for [Ransack gem](https://github.com/activerecord-hackery/ransack/).
+This process [documented here](https://github.com/activerecord-hackery/ransack/wiki/custom-predicates).
+Then you have to register predicate.
+
+```ruby
+# Predicate for a singular value (such as a string)
+Might::FilterPredicates.register('is_upper_case', on: :value)
+
+# Predicate for an array
+Might::FilterPredicates.register('includes', on: :array)
+```
+
 
 ### Configuring sorting
 
