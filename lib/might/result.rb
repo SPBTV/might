@@ -27,7 +27,10 @@ module Might
 
     # @raise [NotImplementedError]
     def get
-      fail NotImplementedError
+      fail NotImplementedError, <<-MESSAGE.strip_heredoc
+        #{self.class} does not respond to #get. You should explicitly check for
+        #success? before calling #get.
+      MESSAGE
     end
 
     # @yield given block
