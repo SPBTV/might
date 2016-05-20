@@ -1,3 +1,7 @@
+**0.6.1**
+
+  * Add error message to `Failure#get`
+
 **0.6.0**
 
   * Implement public API for registering predicates
