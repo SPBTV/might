@@ -15,12 +15,16 @@ module Might
 
     # Find filter by name or raise error
     # @param name [String]
+    # @yieldparam name [String]
+    #   block value will be returned if no `FilterParameter` found with specified name
     # @return [Might::FilterParameter]
     # @raise FilterError
     #
     def fetch(name)
       if (filter = self[name])
         filter
+      elsif block_given?
+        yield(name)
       else
         fail FilterError, "filter not found: #{name.inspect}"
       end

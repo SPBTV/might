@@ -41,10 +41,37 @@ RSpec.describe Might::FilterParameters do
     context 'when parameter name given is absent' do
       let(:parameter_name) { :width }
 
-      it 'returns parameter with this name' do
+      it 'fails with filter error' do
         expect do
           fetch
         end.to raise_error(Might::FilterParameters::FilterError, 'filter not found: :width')
+      end
+    end
+
+    context 'with optional block passed' do
+      NoSuchFilterError = Class.new(StandardError)
+      subject(:fetch) do
+        filter_parameters.fetch(parameter_name) do |name|
+          fail NoSuchFilterError, name
+        end
+      end
+
+      context 'when existing parameter name given' do
+        let(:parameter_name) { 'height' }
+
+        it 'returns parameter with this name' do
+          is_expected.to eq(parameter)
+        end
+      end
+
+      context 'when parameter name given is absent' do
+        let(:parameter_name) { :width }
+
+        it 'returns block value' do
+          expect do
+            fetch
+          end.to raise_error(NoSuchFilterError, 'width')
+        end
       end
     end
   end
