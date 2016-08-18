@@ -1,3 +1,7 @@
+**0.6.2**
+
+  * Allow to pass block to `FilterParameter#fetch` to customize not found behaviour.
+
 **0.6.1**
 
   * Add error message to `Failure#get`
