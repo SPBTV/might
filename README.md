@@ -303,6 +303,16 @@ new version, update the version number in `version.rb`, and then run `bundle exe
 which will create a git tag for the version, push git commits and tags, and push the `.gem`
 file to [rubygems.org](https://rubygems.org).
 
+
+We test `Might` against different versions of `ActiveRecord` and `Ransack` using [appraisal](https://github.com/thoughtbot/appraisal) gem.
+To regenerate gemfiles run:
+
+    $ appraisal install
+
+To run specs against all versions:
+
+    $ appraisal rake spec
+
 ## License
 
 Copyright 2015 SPB TV AG
