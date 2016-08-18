@@ -17,6 +17,18 @@ module Might
       @parameters = Set.new(parameters)
     end
 
+    # Dup internal set.
+    def initialize_dup(orig)
+      super
+      @parameters = orig.parameters.dup
+    end
+
+    # Clone internal set.
+    def initialize_clone(orig)
+      super
+      @parameters = orig.parameters.clone
+    end
+
     # Find filter by name
     # @param name [String]
     # @return [Might::FilterParameter, nil]

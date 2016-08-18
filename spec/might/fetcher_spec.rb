@@ -45,6 +45,14 @@ RSpec.describe Might::Fetcher do
   context 'filter, sorting and inheritance', database: true do
     require 'database_helper'
 
+    let!(:other_fetcher) do
+      Class.new(Might::Fetcher) do
+        filter :some_field, validates: { presence: true }
+
+        self.resource_class = Page
+      end
+    end
+
     let(:page_fetcher) do
       Class.new(Might::Fetcher) do
         filter :name
