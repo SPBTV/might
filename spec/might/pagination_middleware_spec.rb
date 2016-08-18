@@ -26,8 +26,8 @@ RSpec.describe Might::PaginationMiddleware do
       {
         'page' => {
           'limit' => 2,
-          'offset' => 4
-        }
+          'offset' => 4,
+        },
       }.with_indifferent_access
     end
 

@@ -7,10 +7,10 @@ RSpec.describe Might::FilterParameter do
                                     errors: {
                                       attributes: {
                                         resource_type: {
-                                          inclusion: 'is not included in the list'
-                                        }
-                                      }
-                                    }
+                                          inclusion: 'is not included in the list',
+                                        },
+                                      },
+                                    },
                                    )
   end
 

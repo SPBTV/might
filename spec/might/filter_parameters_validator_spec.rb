@@ -13,10 +13,10 @@ RSpec.describe Might::FilterParametersValidator do
                                     activemodel: {
                                       errors: {
                                         messages: {
-                                          blank: 'should not be blank'
-                                        }
-                                      }
-                                    }
+                                          blank: 'should not be blank',
+                                        },
+                                      },
+                                    },
                                    )
   end
 

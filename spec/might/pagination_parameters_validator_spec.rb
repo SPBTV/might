@@ -13,10 +13,10 @@ RSpec.describe Might::PaginationParametersValidator do
                                       errors: {
                                         messages: {
                                           invalid_page_type: 'is invalid',
-                                          not_a_number: 'is not a number'
-                                        }
-                                      }
-                                    }
+                                          not_a_number: 'is not a number',
+                                        },
+                                      },
+                                    },
                                    )
   end
 

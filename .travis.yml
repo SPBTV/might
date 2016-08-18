@@ -1,15 +1,13 @@
-sudo: false
+---
 language: ruby
 rvm:
-  - 2.1.5
-  - 2.2.2
-  - 2.2.3
-  - ruby-head
-matrix:
-  allow_failures:
-    - rvm: ruby-head
-  fast_finish: true
-before_install: gem install bundler -v 1.10.6
+- 2.2.5
+- 2.3.1
 script:
-  - bundle exec rake spec
-  - bundle exec rubocop --fail-level C
+- bundle exec rake spec
+- bundle exec rubocop --fail-level C
+gemfile:
+- gemfiles/rails_4.2.7_ransack_1.6.6.gemfile
+- gemfiles/rails_4.2.7_ransack_1.8.2.gemfile
+- gemfiles/rails_5.0.0_ransack_1.6.6.gemfile
+- gemfiles/rails_5.0.0_ransack_1.8.2.gemfile

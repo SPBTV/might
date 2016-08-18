@@ -55,7 +55,7 @@ module Might
       predicate = FilterPredicates.all.detect { |p| name_with_predicate.end_with?("_#{p}") }
       [
         name_with_predicate.chomp("_#{predicate}"),
-        predicate
+        predicate,
       ]
     end
 

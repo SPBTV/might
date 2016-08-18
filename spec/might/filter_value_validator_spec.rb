@@ -8,10 +8,10 @@ RSpec.describe Might::FilterValueValidator do
                                     activemodel: {
                                       errors: {
                                         messages: {
-                                          undefined_filter: 'is not allowed filter name'
-                                        }
-                                      }
-                                    }
+                                          undefined_filter: 'is not allowed filter name',
+                                        },
+                                      },
+                                    },
                                    )
   end
 

@@ -34,22 +34,22 @@ module Might
     CONT_ANY = 'cont_any'.freeze
 
     @predicates_on_value = Set.new([
-                                     NOT_EQ, EQ,
-                                     DOES_NOT_MATCH, MATCHES,
-                                     GT, LT,
-                                     GTEQ, LTEQ,
-                                     NOT_CONT, CONT,
-                                     NOT_START, START,
-                                     DOES_NOT_END, ENDS,
-                                     NOT_TRUE, TRUE,
-                                     NOT_FALSE, FALSE,
-                                     BLANK, PRESENT,
-                                     NOT_NULL, NULL
-                                   ])
+      NOT_EQ, EQ,
+      DOES_NOT_MATCH, MATCHES,
+      GT, LT,
+      GTEQ, LTEQ,
+      NOT_CONT, CONT,
+      NOT_START, START,
+      DOES_NOT_END, ENDS,
+      NOT_TRUE, TRUE,
+      NOT_FALSE, FALSE,
+      BLANK, PRESENT,
+      NOT_NULL, NULL
+    ])
     @predicates_on_array = Set.new([
-                                     NOT_IN, IN,
-                                     NOT_CONT_ANY, CONT_ANY
-                                   ])
+      NOT_IN, IN,
+      NOT_CONT_ANY, CONT_ANY
+    ])
 
     # Registers predicate on singular value or on array
     # @param predicate [String, Symbol]
