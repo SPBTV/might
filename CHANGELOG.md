@@ -1,3 +1,9 @@
+**0.7.0**
+
+  * Allow to pass block to `FilterParameter#fetch` to customize not found behaviour.
+  * Implement `FilterParameter#delete`.
+  * `FilterParameters` is not derived from `Set` anymore.
+
 **0.6.1**
 
   * Add error message to `Failure#get`
