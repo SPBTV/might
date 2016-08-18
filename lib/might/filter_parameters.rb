@@ -65,7 +65,7 @@ module Might
 
     # Delete filter by name
     # @param name [String]
-    # @return [Might::FilterParameter]
+    # @return [Might::FilterParameter, nil]
     def delete(name)
       filter_parameter = self[name]
       parameters.delete(filter_parameter) if filter_parameter
