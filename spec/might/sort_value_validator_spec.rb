@@ -8,10 +8,10 @@ RSpec.describe Might::SortValueValidator do
                                     activemodel: {
                                       errors: {
                                         messages: {
-                                          undefined_sort_order: 'is not allowed sort order'
-                                        }
-                                      }
-                                    }
+                                          undefined_sort_order: 'is not allowed sort order',
+                                        },
+                                      },
+                                    },
                                    )
   end
 

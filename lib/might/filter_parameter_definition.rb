@@ -71,7 +71,7 @@ module Might
     end
 
     def undefined?
-      !self.defined? # rubocop:disable Style/RedundantSelf
+      !self.defined?
     end
 
     # Proc with defined validations

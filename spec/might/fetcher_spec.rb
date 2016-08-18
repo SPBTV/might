@@ -64,13 +64,13 @@ RSpec.describe Might::Fetcher do
       params = {
         filter: {
           'name_not_eq' => 'Page #1',
-          'slug_not_eq' => ''
+          'slug_not_eq' => '',
         },
         sort: '-name',
         page: {
           limit: 1,
-          offset: 1
-        }
+          offset: 1,
+        },
       }
       result = another_page_fetcher.new(params).call
       expect(result).to be_success

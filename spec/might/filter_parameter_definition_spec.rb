@@ -37,7 +37,7 @@ RSpec.describe Might::FilterParameterDefinition do
     context 'when predicates given' do
       let(:options) do
         {
-          predicates: %w(in eq)
+          predicates: %w(in eq),
         }
       end
 
