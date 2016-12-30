@@ -1,5 +1,4 @@
-require 'might/pagination_parameters_validator'
-
+# frozen_string_literal: true
 RSpec.describe Might::PaginationParametersValidator do
   let(:errors) { ['The error'] }
   let(:validator) do

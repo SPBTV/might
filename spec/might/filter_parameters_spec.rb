@@ -1,7 +1,4 @@
-require 'might/filter_parameters'
-require 'might/filter_parameter_definition'
-require 'might/filter_parameter'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterParameters do
   let(:parameter_definition) { Might::FilterParameterDefinition.new(:height) }
   let(:parameter) { Might::FilterParameter.new('146', 'eq', parameter_definition) }

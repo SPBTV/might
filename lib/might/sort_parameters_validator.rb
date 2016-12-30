@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Might
   # Validates sortings and raises error if one of them is invalid
   #

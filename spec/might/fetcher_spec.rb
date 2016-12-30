@@ -1,5 +1,4 @@
-require 'might/fetcher'
-
+# frozen_string_literal: true
 RSpec.describe Might::Fetcher do
   describe '#call' do
     let(:params) { double('params') }

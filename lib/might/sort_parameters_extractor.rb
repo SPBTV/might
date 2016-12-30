@@ -1,6 +1,4 @@
-require 'might/sort_undefined_parameter'
-require 'might/sort_parameter'
-
+# frozen_string_literal: true
 module Might
   # User provided sorting syntax:
   #   * `name` - sort by name

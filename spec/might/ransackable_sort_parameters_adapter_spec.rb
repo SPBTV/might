@@ -1,7 +1,4 @@
-require 'might/ransackable_sort_parameters_adapter'
-require 'might/sort_parameter'
-require 'might/sort_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::RansackableSortParametersAdapter do
   let(:converter) do
     described_class.new(->(env) { env[1] })

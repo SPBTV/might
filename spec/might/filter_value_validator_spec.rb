@@ -1,7 +1,4 @@
-require 'might/filter_value_validator'
-require 'might/filter_undefined_parameter'
-require 'might/filter_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterValueValidator do
   before :all do
     I18n.backend.store_translations(:en,

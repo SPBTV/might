@@ -1,6 +1,4 @@
-require 'set'
-require 'forwardable'
-
+# frozen_string_literal: true
 module Might
   #
   class FilterParameters

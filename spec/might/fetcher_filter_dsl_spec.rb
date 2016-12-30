@@ -1,8 +1,4 @@
-require 'set'
-require 'might/fetcher'
-require 'might/filter_parameter_definition'
-require 'might/filter_parameters'
-
+# frozen_string_literal: true
 RSpec.describe Might::Fetcher, 'Filter DSL' do
   describe '.filter' do
     let(:fetcher_class) do

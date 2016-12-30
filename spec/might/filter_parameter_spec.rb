@@ -1,6 +1,4 @@
-require 'might/filter_parameter'
-require 'might/filter_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterParameter do
   before :all do
     I18n.backend.store_translations(:en,

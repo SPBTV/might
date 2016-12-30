@@ -1,6 +1,4 @@
-require 'might/ransackable_filter'
-require 'might/filter_parameter'
-require 'might/filter_parameter_definition'
+# frozen_string_literal: true
 require 'database_helper'
 
 RSpec.describe Might::RansackableFilter, database: true do

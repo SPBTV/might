@@ -1,7 +1,4 @@
-require_relative 'ransackable_filter'
-require_relative 'ransackable_filter_parameters_adapter'
-require 'middleware'
-#
+# frozen_string_literal: true
 module Might
   # Filter scope using ransack gem
   #

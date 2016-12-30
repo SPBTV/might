@@ -1,3 +1,7 @@
+**0.7.2**
+
+  * Use `autoload` instead of explicit `require` and `require_relative`.
+
 **0.7.0**
 
   * Allow to pass block to `FilterParameter#fetch` to customize not found behaviour.

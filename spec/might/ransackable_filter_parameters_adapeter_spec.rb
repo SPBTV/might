@@ -1,7 +1,4 @@
-require 'might/ransackable_filter_parameters_adapter'
-require 'might/filter_parameter'
-require 'might/filter_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::RansackableFilterParametersAdapter do
   let(:converter) do
     described_class.new(->(env) { env[1] })

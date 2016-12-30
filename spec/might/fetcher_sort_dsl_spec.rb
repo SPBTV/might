@@ -1,7 +1,4 @@
-require 'set'
-require 'might/fetcher'
-require 'might/sort_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::Fetcher, 'Sort DSL' do
   let(:fetcher_class) do
     Class.new(described_class)

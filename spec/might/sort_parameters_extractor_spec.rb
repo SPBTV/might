@@ -1,8 +1,4 @@
-require 'set'
-require 'might/sort_parameters_extractor'
-require 'might/sort_parameter_definition'
-require 'might/sort_parameter'
-
+# frozen_string_literal: true
 RSpec.describe Might::SortParametersExtractor do
   subject :extract do
     described_class.new(->(env) { env[0] }, definitions).call([params, nil])[:sort]

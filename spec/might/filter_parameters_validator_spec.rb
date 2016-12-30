@@ -1,7 +1,4 @@
-require 'might/filter_parameters_validator'
-require 'might/filter_parameter'
-require 'might/filter_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterParametersValidator do
   let(:validator) do
     app = ->(env) { env }

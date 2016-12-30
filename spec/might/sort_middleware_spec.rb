@@ -1,7 +1,4 @@
-require 'might/sort_middleware'
-require 'might/sort_parameter'
-require 'might/sort_parameter_definition'
-require 'set'
+# frozen_string_literal: true
 require 'database_helper'
 
 RSpec.describe Might::SortMiddleware, database: true do

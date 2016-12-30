@@ -1,7 +1,4 @@
-require 'might/filter_middleware'
-require 'might/filter_parameter'
-require 'might/filter_parameter_definition'
-require 'might/filter_parameters'
+# frozen_string_literal: true
 require 'database_helper'
 
 RSpec.describe Might::FilterMiddleware, database: true do

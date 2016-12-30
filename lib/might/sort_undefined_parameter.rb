@@ -1,5 +1,4 @@
-require 'might/sort_parameter_definition'
-
+# frozen_string_literal: true
 module Might
   # Null object for ParameterDefinition
   #

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Might
   # Marker module
   module Result

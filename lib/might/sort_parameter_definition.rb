@@ -1,5 +1,4 @@
-require_relative 'sort_value_validator'
-
+# frozen_string_literal: true
 module Might
   # Sorting parameter definition
   #

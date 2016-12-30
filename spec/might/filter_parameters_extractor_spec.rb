@@ -1,10 +1,4 @@
-require 'set'
-require 'might/filter_parameters_extractor'
-require 'might/filter_predicates'
-require 'might/filter_parameter_definition'
-require 'might/filter_parameter'
-require 'might/filter_parameters'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterParametersExtractor do
   context '#call' do
     # @param parameters_definition [Might::FilterParameterDefinition]

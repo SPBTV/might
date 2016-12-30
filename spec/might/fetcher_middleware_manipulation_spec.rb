@@ -1,5 +1,4 @@
-require 'might/fetcher'
-
+# frozen_string_literal: true
 RSpec.describe Might::Fetcher, 'middleware stack builder' do
   require_relative 'inserted_middleware_examples'
   include_examples 'inserted middleware', :after
