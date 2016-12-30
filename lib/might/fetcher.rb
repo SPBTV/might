@@ -1,19 +1,4 @@
-require 'might/filter_parameters'
-require 'might/sort_parameters_extractor'
-require 'might/sort_parameters_validator'
-require 'might/filter_parameters_extractor'
-require 'might/filter_parameters_validator'
-require 'might/pagination_parameters_validator'
-
-require 'might/filter_middleware'
-require 'might/sort_middleware'
-require 'might/pagination_middleware'
-
-require 'might/result'
-require 'uber/inheritable_attr'
-require 'middleware'
-
-#
+# frozen_string_literal: true
 module Might
   # Configure your own fetcher
   #

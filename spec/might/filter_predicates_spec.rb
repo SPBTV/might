@@ -1,5 +1,4 @@
-require 'might/filter_predicates'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterPredicates do
   describe '.register' do
     context 'predicate on value' do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Might
   # Converts array of parameters to hash familiar to ransack gem
   #

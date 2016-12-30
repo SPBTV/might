@@ -1,8 +1,4 @@
-require 'might/ransackable_sort_parameters_adapter'
-require 'might/ransackable_sort'
-require 'might/sort_parameters_extractor'
-require 'middleware'
-
+# frozen_string_literal: true
 module Might
   # Sort scope using ransack gem
   #

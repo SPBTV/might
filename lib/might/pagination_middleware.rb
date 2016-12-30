@@ -1,6 +1,4 @@
-# require_relative 'validator'
-require 'might/paginator'
-
+# frozen_string_literal: true
 module Might
   # Pagination middleware
   #

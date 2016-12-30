@@ -1,5 +1,4 @@
-require_relative 'filter_parameter_definition'
-
+# frozen_string_literal: true
 module Might
   # Null object for ParameterDefinition
   #

@@ -1,4 +1,4 @@
-require 'might/ransackable_sort'
+# frozen_string_literal: true
 require 'database_helper'
 
 RSpec.describe Might::RansackableSort, database: true do

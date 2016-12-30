@@ -1,5 +1,4 @@
-require 'might/filter_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::FilterParameterDefinition do
   context '#as' do
     context 'when :as option given' do

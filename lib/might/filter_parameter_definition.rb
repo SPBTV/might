@@ -1,7 +1,4 @@
-require 'active_support/core_ext/module/delegation'
-require_relative 'filter_predicates'
-require_relative 'filter_value_validator'
-
+# frozen_string_literal: true
 module Might
   # Filtering parameter definition
   #

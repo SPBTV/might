@@ -1,5 +1,4 @@
-require 'might/sort_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::SortParameterDefinition do
   context '#as' do
     context 'when :as option given' do

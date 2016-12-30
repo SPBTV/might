@@ -1,5 +1,4 @@
-# require 'active_support/core_ext/hash/keys'
-
+# frozen_string_literal: true
 module Might
   # Paginates ActiveRecord scopes
   # @example

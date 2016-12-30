@@ -1,8 +1,4 @@
-require 'might/sort_parameters_validator'
-require 'might/sort_parameter'
-require 'might/sort_parameter_definition'
-require 'might/sort_undefined_parameter'
-
+# frozen_string_literal: true
 RSpec.describe Might::SortParametersValidator do
   before :all do
     I18n.backend.store_translations(:en,

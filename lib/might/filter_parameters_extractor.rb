@@ -1,8 +1,4 @@
-require_relative 'filter_predicates'
-require_relative 'filter_undefined_parameter'
-require_relative 'filter_parameter'
-require_relative 'filter_parameters'
-
+# frozen_string_literal: true
 module Might
   # User provided filters syntax:
   #   * `{ 'name_eq' => 'Martin' }` - name is equal to Martin

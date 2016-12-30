@@ -1,12 +1,4 @@
-require 'active_support'
-require 'active_support/core_ext/module/delegation'
-require 'active_model/validator'
-require 'active_model/validations'
-require 'active_model/naming'
-require 'active_model/callbacks'
-require 'active_model/translation'
-require 'active_model/errors'
-
+# frozen_string_literal: true
 module Might
   # Build singleton validation class for specified attribute name
   # @example you need a nice validator for a first_name
@@ -30,7 +22,7 @@ module Might
         include ActiveModel::Validations
 
         validates(definition.as, definition.validations) if definition.validations.present?
-        validates(definition.as, :'might/filter_value_validator/defined' => true)
+        validates(definition.as, 'might/filter_value_validator/defined': true)
 
         define_method(:undefined?) { definition.undefined? }
 

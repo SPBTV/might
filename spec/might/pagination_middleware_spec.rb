@@ -1,4 +1,4 @@
-require 'might/pagination_middleware'
+# frozen_string_literal: true
 require 'database_helper'
 
 RSpec.describe Might::PaginationMiddleware do

@@ -1,6 +1,4 @@
-require 'might/sort_parameter'
-require 'might/sort_parameter_definition'
-
+# frozen_string_literal: true
 RSpec.describe Might::SortParameter do
   context '#direction' do
     subject(:parameter) { described_class.new(:asc, definition) }
