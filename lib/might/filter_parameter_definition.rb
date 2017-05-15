@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash'
+
 # frozen_string_literal: true
 module Might
   # Filtering parameter definition
