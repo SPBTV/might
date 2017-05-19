@@ -263,6 +263,17 @@ ChannelFetcher.run('sort' => '-created_at,name')
 The above example should return the newest channels first. Any articles created on the same date will then
 be sorted by their name in ascending alphabetical order.
 
+It's possible to dynamically determine the sorting order. Consider a Channel with name translations stored in separate
+column for each language. For example Russian translation is stored at `name_ru`, Czech at `name_cz', etc. 
+To sort channels by translated name depending on user's locale define sort order as lambda:
+ 
+```ruby
+sort ->(params) { "name_#{params['locale']}" }, as: :name
+```
+```ruby
+ChannelFetcher.run('sort' => 'name', 'locale' => 'cz')
+```
+
 ### Configuring components
 
 Mighty Fetcher implements it's components as chain of middlewares (Using [ibsciss-middleware](https://github.com/Ibsciss/ruby-middleware))
