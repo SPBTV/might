@@ -11,7 +11,7 @@ module Might
       scope, params = env
 
       ransackable_parameters = Array(params[:sort]).map do |parameter|
-        "#{parameter.name} #{parameter.direction}"
+        "#{parameter.name(params)} #{parameter.direction}"
       end
 
       app.call([scope, params.merge(sort: ransackable_parameters)])

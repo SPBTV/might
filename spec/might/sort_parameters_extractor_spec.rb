@@ -38,6 +38,25 @@ RSpec.describe Might::SortParametersExtractor do
       end
     end
 
+    context 'sorting option defined as lambda with alias' do
+      let(:definition) { Might::SortParameterDefinition.new(->(params) { params[:name] }, as: :title) }
+      let(:definitions) { Set.new([definition]) }
+      let(:params) { { sort: 'title' } }
+
+      it 'returns Parameters' do
+        parameter = Might::SortParameter.new(:asc, definition)
+        is_expected.to contain_exactly(parameter)
+      end
+    end
+
+    context 'sorting option defined as lambda without alias' do
+      subject { -> { Might::SortParameterDefinition.new(->(params) { params[:name] }) } }
+
+      it 'fails with argument error' do
+        is_expected.to raise_error(ArgumentError)
+      end
+    end
+
     context 'with alias and direction' do
       let(:definition) { Might::SortParameterDefinition.new(:name, as: :title) }
       let(:definitions) { Set.new([definition]) }

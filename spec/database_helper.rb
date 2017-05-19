@@ -28,7 +28,7 @@ require 'fixtures/page'
 RSpec.configure do |config|
   config.before :all, database: true do
     Schema.create
-    3.times { |n| Page.create!(name: "Page ##{n}") }
+    3.times { |n| Page.create!(name: "Page ##{n}", slug: "Page ##{3 - n}") }
   end
 
   config.after :all, database: true do

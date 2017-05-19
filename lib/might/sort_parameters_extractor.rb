@@ -22,7 +22,7 @@ module Might
     # @param env [<String, []>]
     #   * first element is a scope to be sorted
     #   * second is a String with user provided sortings
-    # @return [<<Might::RansackableSort::SortParameter, []>]
+    # @return [<Might::RansackableSort::SortParameter, []>]
     #
     def call(env)
       params, errors = env
