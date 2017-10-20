@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'ransack', '>= 1.6.6'
   spec.add_development_dependency 'activerecord', '>= 3.2', '< 6.0.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.11'
-  spec.add_development_dependency 'bundler', '~> 1.13.7'
+  spec.add_development_dependency 'bundler', '>= 1.13.7'
   spec.add_development_dependency 'rake', '~> 11.2.2'
   spec.add_development_dependency 'rspec', '~> 3.5.0'
   spec.add_development_dependency 'spbtv_code_style', '1.4.1'
