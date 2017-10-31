@@ -52,8 +52,11 @@ module Might
     attr_reader :params
 
     # @param params [Hash]
-    def initialize(params)
+    # @yieldparam resource_class [Result]
+    # @yieldreturn [Result]
+    def initialize(params, &block)
       @params = params
+      @decorate_resource_class = block || :itself.to_proc
     end
 
     # @return [Might::Result] filtered and sorted collection
@@ -94,7 +97,7 @@ module Might
     # This method may be overridden to implement integration with library other than Ransack
     #
     def fetch(parsed_params)
-      collection, = middleware.call([self.class.resource_class, parsed_params])
+      collection, = middleware.call([@decorate_resource_class.call(self.class.resource_class), parsed_params])
       collection
     end
 

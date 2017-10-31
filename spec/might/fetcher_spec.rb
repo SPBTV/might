@@ -2,18 +2,18 @@
 RSpec.describe Might::Fetcher do
   describe '#call' do
     let(:params) { double('params') }
-    let(:collection) { double('collection') }
-    let(:processed_collection) { double('processed_collection') }
-    let(:fetcher) { fetcher_class(collection, processed_collection).new(params) }
+    let(:fetcher) { fetcher_class.new(params, &decorate_resource_class) }
+    let(:decorate_resource_class) { nil }
+    let(:resource_class) { double('resource_class') }
 
-    def fetcher_class(collection, processed_collection)
-      klass = double('resource_class', all: collection)
+    def fetcher_class
+      s = self
 
       Class.new(described_class) do
-        self.resource_class = klass
+        self.resource_class = s.resource_class
         define_method :fetch_middleware do
           ::Middleware::Builder.new do |b|
-            b.use ->(_) { processed_collection }
+            b.use ->(collection_and_params) { [[:processed, collection_and_params.first], collection_and_params.last] }
           end
         end
 
@@ -27,7 +27,7 @@ RSpec.describe Might::Fetcher do
       it 'yields with processed collection' do
         expect do |b|
           fetcher.call(&b)
-        end.to yield_with_args(be_success.and(have_attributes(get: processed_collection)))
+        end.to yield_with_args(be_success.and(have_attributes(get: [:processed, resource_class])))
       end
     end
 
@@ -35,8 +35,16 @@ RSpec.describe Might::Fetcher do
       subject { fetcher.call }
 
       it 'returns processed collection' do
-        is_expected.to be_success
-        is_expected.to have_attributes(get: processed_collection)
+        is_expected.to be_success.and(have_attributes(get: [:processed, resource_class]))
+      end
+    end
+
+    context 'when initial resource class is decorated' do
+      subject { fetcher.call }
+      let(:decorate_resource_class) { ->(resource_class) { [:decorated, resource_class] } }
+
+      it 'returns processed collection' do
+        is_expected.to be_success.and(have_attributes(get: [:processed, [:decorated, resource_class]]))
       end
     end
   end
