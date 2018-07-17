@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 RSpec.describe Might::Fetcher do
   describe '#call' do
-    let(:params) { double('params') }
+    let(:params) { {} }
     let(:collection) { double('collection') }
     let(:processed_collection) { double('processed_collection') }
     let(:fetcher) { fetcher_class(collection, processed_collection).new(params) }

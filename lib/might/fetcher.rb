@@ -53,7 +53,7 @@ module Might
 
     # @param params [Hash]
     def initialize(params)
-      @params = params
+      @params = params.with_indifferent_access
     end
 
     # @return [Might::Result] filtered and sorted collection

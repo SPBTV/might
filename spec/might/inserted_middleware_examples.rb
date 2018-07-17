@@ -3,7 +3,7 @@ RSpec.shared_examples 'inserted middleware' do |modification|
   context ".#{modification}" do
     let(:processed_collection) { double('processed_collection') }
     let(:collection) { double('collection') }
-    let(:params) { double('params') }
+    let(:params) { {} }
 
     def env
       @env ||= []
@@ -38,7 +38,7 @@ RSpec.shared_examples 'inserted middleware' do |modification|
     end
 
     context 'when block returns tuple' do
-      let(:processed_params) { double(Hash) }
+      let(:processed_params) { {} }
       let(:test_probe) { ->(_resource, _params) { [processed_collection, processed_params] } }
       before { fetch! }
 
