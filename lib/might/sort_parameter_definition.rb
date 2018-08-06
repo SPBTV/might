@@ -23,11 +23,11 @@ module Might
       @reverse_direction = reverse_direction
     end
 
-    # If two parameters have the same name, they are equal.
-    delegate :hash, to: :name
+    # If two parameters have the same outer name, they are equal.
+    delegate :hash, to: :as
 
     def eql?(other)
-      other.is_a?(self.class) && other.name == name
+      other.is_a?(self.class) && other.as == as
     end
 
     def ==(other)

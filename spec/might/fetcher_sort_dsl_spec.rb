@@ -39,6 +39,18 @@ RSpec.describe Might::Fetcher, 'Sort DSL' do
       end
     end
 
+    context 'add sortable property with and without an alias' do
+      before do
+        fetcher_class.sort :foo
+        fetcher_class.sort :foo, as: :bar
+      end
+
+      it do
+        is_expected
+          .to include(Might::SortParameterDefinition.new(:foo), Might::SortParameterDefinition.new(:foo, as: :bar))
+      end
+    end
+
     context 'add sortable property with :reverse' do
       let(:property) do
         Might::SortParameterDefinition.new(:foo, reverse_direction: true)
