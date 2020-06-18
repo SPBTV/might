@@ -212,8 +212,9 @@ module Might
       #     end
       #   end
       #
-      def after(&block)
-        alter_middleware(:use, &block)
+      def after(middleware_or_index = nil, &block)
+        args = middleware_or_index ? [:insert_after, middleware_or_index] : [:use]
+        alter_middleware(*args, &block)
       end
 
       # Add middleware to the beginning of middleware chane
