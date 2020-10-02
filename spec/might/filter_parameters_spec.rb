@@ -20,12 +20,22 @@ RSpec.describe Might::FilterParameters do
       it 'returns parameter with this name' do
         is_expected.to eq(parameter)
       end
+
+      context 'when predicate is specified' do
+        let(:predicate) { 'in' }
+        let(:second_parameter) { Might::FilterParameter.new('146', predicate, parameter_definition) }
+        let(:filter_parameters) { described_class.new([parameter, second_parameter]) }
+
+        it 'returns parameter with this name and predicate' do
+          expect(filter_parameters[parameter_name, predicate]).to eq(second_parameter)
+        end
+      end
     end
 
     context 'when parameter name given is absent' do
       let(:parameter_name) { 'width' }
 
-      it 'returns parameter with this name' do
+      it 'returns nil' do
         is_expected.to be_nil
       end
     end
@@ -39,6 +49,16 @@ RSpec.describe Might::FilterParameters do
 
       it 'returns parameter with this name' do
         is_expected.to eq(parameter)
+      end
+
+      context 'when predicate is specified' do
+        let(:predicate) { 'in' }
+        let(:second_parameter) { Might::FilterParameter.new('146', predicate, parameter_definition) }
+        let(:filter_parameters) { described_class.new([parameter, second_parameter]) }
+
+        it 'returns parameter with this name and predicate' do
+          expect(filter_parameters.fetch(parameter_name, predicate)).to eq(second_parameter)
+        end
       end
     end
 
@@ -89,6 +109,18 @@ RSpec.describe Might::FilterParameters do
       it 'returns parameter with this name' do
         is_expected.to eq(parameter)
         expect(filter_parameters[parameter_name]).to eq(nil)
+      end
+
+      context 'when predicate is specified' do
+        let(:predicate) { 'in' }
+        let(:second_parameter) { Might::FilterParameter.new('146', predicate, parameter_definition) }
+        let(:filter_parameters) { described_class.new([parameter, second_parameter]) }
+
+        it 'returns parameter with this name and predicate' do
+          param = filter_parameters.delete(parameter_name, predicate)
+          expect(param).to eq(second_parameter)
+          expect(filter_parameters[parameter_name, predicate]).to eq(nil)
+        end
       end
     end
 
