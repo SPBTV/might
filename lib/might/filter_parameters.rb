@@ -29,21 +29,25 @@ module Might
 
     # Find filter by name
     # @param name [String]
+    # @param predicate [String]
     # @return [Might::FilterParameter, nil]
     #
-    def [](name)
-      parameters.detect { |filter| filter.name == name }
+    def [](name, predicate = nil)
+      parameters.detect do |filter|
+        filter.name == name && (predicate.nil? || filter.predicate == predicate)
+      end
     end
 
     # Find filter by name or raise error
     # @param name [String]
+    # @param predicate [String]
     # @yieldparam name [String]
     #   block value will be returned if no `FilterParameter` found with specified name
     # @return [Might::FilterParameter]
     # @raise FilterError
     #
-    def fetch(name)
-      if (filter = self[name])
+    def fetch(name, predicate = nil)
+      if (filter = self[name, predicate])
         filter
       elsif block_given?
         yield(name)
@@ -73,11 +77,12 @@ module Might
       self.class.new(parameters.merge(other.parameters))
     end
 
-    # Delete filter by name
+    # Delete filter by name and predicate
     # @param name [String]
+    # @param predicate [String]
     # @return [Might::FilterParameter, nil]
-    def delete(name)
-      filter_parameter = self[name]
+    def delete(name, predicate = nil)
+      filter_parameter = self[name, predicate]
       parameters.delete(filter_parameter) if filter_parameter
       filter_parameter
     end
