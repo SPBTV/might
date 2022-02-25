@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'activesupport', '>= 3.2'
   spec.add_runtime_dependency 'activemodel', '>= 3.2'
-  spec.add_runtime_dependency 'uber', '~> 0.0.15'
+  spec.add_runtime_dependency 'uber', '~> 0.1.0'
   spec.add_runtime_dependency 'ibsciss-middleware', '~> 0.3'
   spec.add_runtime_dependency 'ransack', '>= 1.6.6'
   spec.add_development_dependency 'activerecord', '>= 3.2', '< 6.0.0'
