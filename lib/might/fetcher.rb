@@ -161,7 +161,7 @@ module Might
       # @see +RansackableSort+ for details
       #
       def sort(name, options = {})
-        definition = SortParameterDefinition.new(name, options)
+        definition = SortParameterDefinition.new(name, **options)
         sort_parameters_definition.add(definition)
       end
 
