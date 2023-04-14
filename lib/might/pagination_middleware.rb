@@ -7,7 +7,7 @@ module Might
     # @param max_per_page [Integer]
     # @param per_page [Integer]
     #
-    def initialize(app)
+    def initialize(app, max_per_page: false, per_page: 50, paginator_class: Paginator)
       @app = app
       @max_per_page = max_per_page
       @per_page = per_page
