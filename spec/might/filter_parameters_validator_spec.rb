@@ -17,6 +17,18 @@ RSpec.describe Might::FilterParametersValidator do
                                    )
   end
 
+  context 'when predicates are restricted' do
+    let(:definition) { Might::FilterParameterDefinition.new(:name, predicates: [:eq], validates: { presence: true }) }
+    let(:filter) { Might::FilterParameter.new('Bob', 'in', definition) }
+    let(:params) { { filter: [filter] } }
+
+    it 'does not allow to use restricted predicates' do
+      _, errors = validator.call([params, []])
+      expect(errors).not_to be_empty
+    end
+  end
+
+
   context 'when some filter is required' do
     let(:definition) { Might::FilterParameterDefinition.new(:name, validates: { presence: true }) }
     let(:params) { { filter: [filter] } }

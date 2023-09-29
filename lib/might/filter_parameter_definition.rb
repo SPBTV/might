@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash'
+
 # frozen_string_literal: true
 require 'active_support/core_ext/hash/keys'
 
