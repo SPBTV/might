@@ -37,7 +37,7 @@ module Might
       options = default_pagination_options.merge(Hash(params[:page]))
       max_per_page = @max_per_page
 
-      if max_per_page && options[:limit] > max_per_page
+      if max_per_page && options[:limit].to_i > max_per_page
         options.merge(limit: max_per_page)
       else
         options
